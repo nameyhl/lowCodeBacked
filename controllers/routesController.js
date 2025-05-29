@@ -12,8 +12,14 @@ class routesController {
 
   // 新增路由
   static addRoute = asyncHandler(async (req) => {
-    const { name, path, view, level, parentId, isShow } = req.body;
-    const result = await routesService.addRoute({ name, path, view, level, parentId, isShow });
+    const { name, router, view, level, parentId, isShow } = req.body;
+    const result = await routesService.addRoute({ name, router, view, level, parentId, isShow });
+    return result;
+  })
+  // 批量删除路由
+  static deleteRoutes = asyncHandler(async (req) => {
+    const { ids } = req.body;
+    const result = await routesService.deleteRoutes(ids);
     return result;
   })
 }

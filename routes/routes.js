@@ -6,5 +6,7 @@ import routesController from '../controllers/routesController.js'
 router.get('/getRoutes', routesController.getRoutes)
 // 新增路由
 router.post('/addRoute', routesController.addRoute)
+// 批量删除路由
+router.post('/deleteRoutes', routesController.deleteRoutes)
 
 export default router
