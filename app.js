@@ -3,7 +3,7 @@ const app = express();
 const PORT = 3000;
 
 // 引入路由中间件
-import routerlogger from './middlewares/routerLogger';
+import routerlogger from './middlewares/routerLogger.js';
 import cors from 'cors';
 
 // 引入路由
@@ -18,5 +18,5 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));// 解析urlencod
 app.use('/api', router)
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT} `);
+  console.log(`服务运行在: http://localhost:${PORT} `);
 })

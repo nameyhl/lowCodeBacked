@@ -7,7 +7,19 @@ class routesService {
   // 获取所有路由
   static async getRoutes() {
     const routes = await routesModels.getAllRoutes();
-    return CommonUtils.buildTree(routes);
+    let result = {
+      tree: CommonUtils.buildTree(routes),
+      list: routes,
+    };
+    return result;
+  }
+  
+  // 新增路由
+  static async addRoute(route) {
+    // 根据时间戳生成唯一id
+    route.id = new Date().getTime().toString();
+    const result = await routesModels.addRoute(route);
+    return result;
   }
 }
 

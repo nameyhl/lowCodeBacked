@@ -9,6 +9,13 @@ class routesController {
     const routes = await routesService.getRoutes();
     return routes;
   })
+
+  // 新增路由
+  static addRoute = asyncHandler(async (req) => {
+    const { name, path, view, level, parentId, isShow } = req.body;
+    const result = await routesService.addRoute({ name, path, view, level, parentId, isShow });
+    return result;
+  })
 }
 
 export default routesController;
