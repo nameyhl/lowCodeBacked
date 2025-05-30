@@ -10,8 +10,10 @@ const routeLogger = (req, res, next) => {
     const method = req.method;
     const path = req.path;
     const timestamp = new Date().toLocaleString();
+    // 访问ip
+    const ip = req.ip;
     
-    console.log(`[${timestamp}] 方法： ${method} 访问路径： ${path}`);
+    console.log(`(${ip})   [${timestamp}] 方法： ${method} 访问路径： ${path}`);
     
     // 新增SQL日志监听
     const originalQuery = res.query;

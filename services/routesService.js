@@ -29,8 +29,22 @@ class routesService {
     return routes;
   }
 
-  // 批量删除路由
+  // 删除路由
   static async deleteRoutes(id) {
+    // 判断id是否时数组
+    if(Array.isArray(id)){
+      for (let i = 0; i < id.length; i++) {
+        const routeId = id[i];
+        await this.deleteRoute(routeId);
+      }
+    }else{
+      await this.deleteRoute(id);
+    }
+  }
+  // 删除单个路由
+  static async deleteRoute(id) {
+    // 判断删除的节点是否时路由管理
+    if(id === 'addRoute') throw new Error('不能删除路由管理');
     // 查询所有的后代
     const routes = await routesModels.getChildrenRoutes(id);
     // 递归删除所有的后代
@@ -41,7 +55,7 @@ class routesService {
     }
     // 删除当前节点
     const result = await routesModels.deleteRoute(id);
-    return result;
+    return "操作成功";
   }
 }
 
