@@ -5,11 +5,16 @@ const router = express.Router()
 
 
 // 引入各个分组路由
-import routes from './routes.js'
+import routes from './route/routes.js'
+import user from './route/user.js'
+import frim from './route/frim.js'
+import department from './route/department.js'
 
 // 使用路由
 router.use('/routes', routes)
+router.use('/user', user)
+router.use('/frim', frim)
+router.use('/department', department)
 
 // 到处路由
-
 export default router;
