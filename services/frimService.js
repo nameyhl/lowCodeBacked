@@ -2,10 +2,10 @@ import frimModel from "../models/frimModel.js";
 
 class frimService {
     // 新增分公司
-    static async addFrim({name, leader, msg}){
+    static async addFrim({name, leaderId, msg}){
         let id = new Date().getTime();
-        if(leader === '') leader = null;
-        const frim = await frimModel.addFrim({id, name, leader, msg});
+        if(leaderId === '') leaderId = null;
+        const frim = await frimModel.addFrim({id, name, leaderId, msg});
         return frim;
     }
 
@@ -22,9 +22,9 @@ class frimService {
     }
 
     // 修改分公司
-    static async updateFrim({id, name, leader, msg}){
-        if(leader === '') leader = null;
-        const frim = await frimModel.updateFrim({id, name, leader, msg});
+    static async updateFrim({id, name, leaderId, msg}){
+        if(leaderId === '') leaderId = null;
+        const frim = await frimModel.updateFrim({id, name, leaderId, msg});
         return frim;
     }
 }

@@ -5,8 +5,8 @@ import { asyncHandler } from "../utils/responseHandler.js";
 class frimController {
     // 新增分公司
     static addFrim = asyncHandler(async (req, res, next) => {
-        const { name, leader, msg } = req.body;
-        const frim = await frimService.addFrim({ name, leader, msg });
+        const { name, leaderId, msg } = req.body;
+        const frim = await frimService.addFrim({ name, leaderId, msg });
         return frim;
     })
 
@@ -25,8 +25,8 @@ class frimController {
 
     // 修改分公司
     static updateFrim = asyncHandler(async (req, res, next) => {
-        const { id, name, leader, msg } = req.body;
-        const frim = await frimService.updateFrim({ id, name, leader, msg });
+        const { id, name, leaderId, msg } = req.body;
+        const frim = await frimService.updateFrim({ id, name, leaderId, msg });
         return frim;
     })
 }
