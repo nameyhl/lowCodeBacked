@@ -30,7 +30,7 @@ class userController {
     })
     // 根据departmentId查询用户
     static getUserByDepartmentId = asyncHandler(async (req) => {
-        const {departmentId} = req.query;
+        const { departmentId } = req.query;
         const result = await userService.getUserByDepartmentId(departmentId);
         return result;
     })

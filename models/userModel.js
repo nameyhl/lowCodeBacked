@@ -25,7 +25,6 @@ class userModel {
 
     // 修改用户
     static async updateUser({id, username, name, nikename, birth, email, wechat, departmentId, phone}) {
-        console.log(phone);
         const [result] = 
              await pool.query
              (`UPDATE user SET
