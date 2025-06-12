@@ -39,8 +39,10 @@ class userService {
   }
 
   // 获取用户
-  static async getUser() {
-    const user = await userModel.getUser();
+  static async getUser({ page, size }) {
+    page = Number(page);
+    size = Number(size);
+    const user = await userModel.getUser({ page, size });
     return user;
   }
 

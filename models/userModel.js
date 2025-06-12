@@ -9,7 +9,10 @@ LEFT JOIN user_department AS  ud ON u.id = ud.userId
 LEFT JOIN user_frim AS uf ON u.id = uf.userId
 LEFT JOIN department AS d ON d.id = ud.departmentId
 LEFT JOIN frim AS f ON f.id = uf.frimId
-`; // 用户查询语句
+LIMIT ? OFFSET ?`;
+let selectTotleSql = `
+SELECT COUNT(*) AS total FROM user AS u
+`; // 查询总条数语句
 let selectUserByDepartmentIdSql = `
 SELECT u.name AS name, u.id AS id
 FROM user_department as ud
@@ -96,9 +99,13 @@ class userModel {
   }
 
   // 查询用户
-  static async getUser() {
-    const [result] = await pool.query(selectUserSql);
-    return result;
+  static async getUser({ page, size }) {
+    const [result] = await pool.query(selectUserSql, [size, page - 1]);
+    const [resultTotle] = await pool.query(selectTotleSql);
+    return {
+      data: result,
+      total: resultTotle[0].total,
+    };
   }
 
   // 修改用户
