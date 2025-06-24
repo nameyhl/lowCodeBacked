@@ -9,7 +9,7 @@ FROM department AS d
 LEFT JOIN user AS u ON u.id = d.leaderId
 LEFT JOIN frim_department as fd ON d.id = fd.departmentId
 LEFT JOIN frim AS f ON f.id = fd.frimId
-LIMIT ? OFFSET ?
+WHERE 1=1
 `;
 let selectDepartmentSql = `
 SELECT DISTINCT d.*, u.name AS leaderName, f.name AS frimName
@@ -18,7 +18,11 @@ LEFT JOIN user AS u ON u.id = d.leaderId
 LEFT JOIN frim_department as fd ON d.id = fd.departmentId
 LEFT JOIN frim AS f ON f.id = fd.frimId
 `;
-let selectTotleSql = `SELECT COUNT(*) AS total FROM department`;
+let selectTotleSql = `
+SELECT COUNT(DISTINCT d.id) AS total
+FROM department AS d
+LEFT JOIN frim_department AS fd ON fd.departmentId = d.id
+WHERE 1 = 1`;
 let updateDepartmentSql = `UPDATE department SET name = ?, leaderId = ?, msg = ? WHERE id = ?`;
 let updateFrimDepartmentSql = `UPDATE frim_department SET frimId =? WHERE departmentId =?`;
 let deleteDepartment = `DELETE FROM department WHERE id =?`;
@@ -49,13 +53,36 @@ class departmentModel {
     }
   }
   // 获取部门
-  static async getDepartment({ size, page }) {
+  static async getDepartment({ name, frimId, size, page }) {
     try {
+      if (name) {
+        selectDepartmentSqlWithLimit += ` AND d.name LIKE '%${name}%'`;
+        selectTotleSql += ` AND d.name LIKE '%${name}%'`;
+      }
+      if (frimId) {
+        selectDepartmentSqlWithLimit += ` AND fd.frimId = ${frimId}`;
+        selectTotleSql += ` AND fd.frimId = ${frimId}`;
+      }
+      selectDepartmentSqlWithLimit += ` LIMIT ? OFFSET ?`;
       const [departments] = await pool.query(selectDepartmentSqlWithLimit, [
         size,
         page,
       ]);
+      selectDepartmentSqlWithLimit = `
+        SELECT DISTINCT d.*, u.name AS leaderName, f.name AS frimName
+        FROM department AS d
+        LEFT JOIN user AS u ON u.id = d.leaderId
+        LEFT JOIN frim_department as fd ON d.id = fd.departmentId
+        LEFT JOIN frim AS f ON f.id = fd.frimId
+        WHERE 1=1
+      `;
       const [total] = await pool.query(selectTotleSql);
+      selectTotleSql = `
+        SELECT COUNT(DISTINCT d.id) AS total
+        FROM department AS d
+        LEFT JOIN frim_department AS fd ON fd.frimId = d.id
+        WHERE 1 = 1
+      `;
       return {
         data: departments,
         total: total[0].total,
