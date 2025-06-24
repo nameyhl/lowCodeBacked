@@ -1,7 +1,7 @@
 // 引入model层
-import routesModel from '../models/routesModel.js';
+import routesModel from "../models/routesModel.js";
 // 引入通用方法
-import CommonUtils from '../utils/utils.js';
+import CommonUtils from "../utils/utils.js";
 
 class routesService {
   // 获取所有路由
@@ -16,7 +16,7 @@ class routesService {
 
   // 新增路由
   static async addRoute(route) {
-    if (route.parentId === ' ') route.parentId = null;
+    if (route.parentId === " ") route.parentId = null;
     // 根据时间戳生成唯一id
     route.id = new Date().getTime().toString();
     const result = await routesModel.addRoute(route);
@@ -32,19 +32,19 @@ class routesService {
   // 删除路由
   static async deleteRoutes(id) {
     // 判断id是否时数组
-    if(Array.isArray(id)){
+    if (Array.isArray(id)) {
       for (let i = 0; i < id.length; i++) {
         const routeId = id[i];
         await this.deleteRoute(routeId);
       }
-    }else{
+    } else {
       await this.deleteRoute(id);
     }
   }
   // 删除单个路由
   static async deleteRoute(id) {
     // 判断删除的节点是否时路由管理
-    if(id === 'addRoute') throw new Error('不能删除路由管理');
+    if (id === "addRoute") throw new Error("不能删除路由管理");
     // 查询所有的后代
     const routes = await routesModel.getChildrenRoutes(id);
     // 递归删除所有的后代
@@ -56,6 +56,33 @@ class routesService {
     // 删除当前节点
     const result = await routesModel.deleteRoute(id);
     return "操作成功";
+  }
+
+  // 修改路由
+  static async updateRoute(route) {
+    const result = await routesModel.updateRoute(route);
+    return result;
+  }
+  // 查询路由
+  static async searchRoutes({
+    id,
+    name,
+    router,
+    view,
+    level,
+    parentId,
+    isShow,
+  }) {
+    const routes = await routesModel.searchRoutes({
+      id,
+      name,
+      router,
+      view,
+      level,
+      parentId,
+      isShow,
+    });
+    return routes;
   }
 }
 

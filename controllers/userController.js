@@ -30,8 +30,14 @@ class userController {
   });
   // 查询用户
   static getUser = asyncHandler(async (req) => {
-    let query = req.query;
-    const result = await userService.getUser(query);
+    let { page, size, username, name, departmentId } = req.query;
+    const result = await userService.getUser({
+      page,
+      size,
+      username,
+      name,
+      departmentId,
+    });
     return result;
   });
 
@@ -78,6 +84,19 @@ class userController {
   static getUserByFrimId = asyncHandler(async (req) => {
     const { frimId } = req.query;
     const result = await userService.getUserByFrimId(frimId);
+    return result;
+  });
+
+  // 查询用户
+  static searchUser = asyncHandler(async (req) => {
+    const { page, size, username, name, departmentId } = req.body;
+    const result = await userService.searchUser({
+      page,
+      size,
+      username,
+      name,
+      departmentId,
+    });
     return result;
   });
 }

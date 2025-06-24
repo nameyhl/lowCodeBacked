@@ -9,9 +9,13 @@ LEFT JOIN user_department AS  ud ON u.id = ud.userId
 LEFT JOIN user_frim AS uf ON u.id = uf.userId
 LEFT JOIN department AS d ON d.id = ud.departmentId
 LEFT JOIN frim AS f ON f.id = uf.frimId
-LIMIT ? OFFSET ?`;
+WHERE 1=1
+`;
 let selectTotleSql = `
-SELECT COUNT(*) AS total FROM user AS u
+SELECT COUNT(DISTINCT u.id) AS total
+FROM user AS u
+LEFT JOIN user_department AS ud ON u.id = ud.userId
+WHERE 1 = 1
 `; // 查询总条数语句
 let selectUserByDepartmentIdSql = `
 SELECT u.name AS name, u.id AS id
@@ -99,9 +103,36 @@ class userModel {
   }
 
   // 查询用户
-  static async getUser({ page, size }) {
-    const [result] = await pool.query(selectUserSql, [size, page]);
+  static async getUser({ page, size, username, name, departmentId }) {
+    let params = [size, page];
+    if (username) {
+      selectUserSql += `\nAND u.username LIKE '%${username}%'`;
+      selectTotleSql += `\nAND u.username LIKE '%${username}%'`;
+    }
+    if (name) {
+      selectUserSql += `\nAND u.name LIKE '%${name}%'`;
+      selectTotleSql += `\nAND u.name LIKE '%${name}%'`;
+    }
+    if (departmentId) {
+      selectUserSql += `\nAND ud.departmentId = ${departmentId}`;
+      selectTotleSql += `\nAND ud.departmentId = ${departmentId}`;
+    }
+    selectUserSql += `\nLIMIT ? OFFSET ?`;
+    const [result] = await pool.query(selectUserSql, params);
     const [resultTotle] = await pool.query(selectTotleSql);
+    selectUserSql = `
+    SELECT DISTINCT u.*, d.name AS departmentName, f.name AS frimName, TIMESTAMPDIFF(YEAR, birth, CURDATE()) AS age, d.id AS departmentId, uf.frimId AS frimId
+    FROM user AS u 
+    LEFT JOIN user_department AS  ud ON u.id = ud.userId
+    LEFT JOIN user_frim AS uf ON u.id = uf.userId
+    LEFT JOIN department AS d ON d.id = ud.departmentId
+    LEFT JOIN frim AS f ON f.id = uf.frimId
+    WHERE 1=1`;
+    selectTotleSql = `
+    SELECT COUNT(DISTINCT u.id) AS total
+    FROM user AS u
+    LEFT JOIN user_department AS ud ON u.id = ud.userId
+    WHERE 1 = 1`;
     return {
       data: result,
       total: resultTotle[0].total,

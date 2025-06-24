@@ -39,10 +39,16 @@ class userService {
   }
 
   // 获取用户
-  static async getUser({ page, size }) {
+  static async getUser({ page, size, username, name, departmentId }) {
     page = Number((page - 1) * size);
     size = Number(size);
-    const user = await userModel.getUser({ page, size });
+    const user = await userModel.getUser({
+      page,
+      size,
+      username,
+      name,
+      departmentId,
+    });
     return user;
   }
 
@@ -91,6 +97,18 @@ class userService {
   // 根据frimId查询用户
   static async getUserByFrimId(frimId) {
     const user = await userModel.getUserByFrimId(frimId);
+    return user;
+  }
+  static async searchUser({ page, size, username, name, departmentId }) {
+    page = Number((page - 1) * size);
+    size = Number(size);
+    const user = await userModel.searchUser({
+      page,
+      size,
+      username,
+      name,
+      departmentId,
+    });
     return user;
   }
 }
