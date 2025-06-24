@@ -13,10 +13,15 @@ class departmentService {
   }
   //  获取部门列表
   static async getDepartment({ page, size }) {
-    page = Number((page - 1) * size);
-    size = Number(size);
-    const department = await departmentModel.getDepartment({ page, size });
-    return department;
+    if (page && size) {
+      page = Number((page - 1) * size);
+      size = Number(size);
+      const department = await departmentModel.getDepartment({ page, size });
+      return department;
+    } else {
+      const department = await departmentModel.getAllDepartment();
+      return department;
+    }
   }
   //  修改部门信息
   static async updateDepartment({ id, name, frimId, leaderId, msg }) {

@@ -11,10 +11,15 @@ class frimService {
 
   // 获取所有分公司
   static async getFrims({ page, size }) {
-    page = Number((page - 1) * size);
-    size = Number(size);
-    const frims = await frimModel.getFrims({ page, size });
-    return frims;
+    if (page && size) {
+      page = Number((page - 1) * size);
+      size = Number(size);
+      const frims = await frimModel.getFrims({ page, size });
+      return frims;
+    } else {
+      const frims = await frimModel.getAllFrims();
+      return frims;
+    }
   }
 
   // 删除分公司
