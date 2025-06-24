@@ -12,8 +12,10 @@ class departmentService {
     return "新增成功";
   }
   //  获取部门列表
-  static async getDepartment() {
-    const department = await departmentModel.getDepartment();
+  static async getDepartment({ page, size }) {
+    page = Number((page - 1) * size);
+    size = Number(size);
+    const department = await departmentModel.getDepartment({ page, size });
     return department;
   }
   //  修改部门信息

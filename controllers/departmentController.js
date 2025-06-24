@@ -16,7 +16,8 @@ class departmentController {
 
   // 获取部门列表
   static getDepartment = asyncHandler(async (req, res, next) => {
-    const department = await departmentService.getDepartment();
+    const { page, size } = req.query;
+    const department = await departmentService.getDepartment({ page, size });
     return department;
   });
   // 修改部门信息

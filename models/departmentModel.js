@@ -4,11 +4,14 @@ import pool from "../configs/mysql.js";
 let insertDepartmentSql = `INSERT INTO department (id, name, leaderId, msg) VALUES (?,?,?,?)`; // department插入语句
 let insertFrimDepartmentSql = `INSERT INTO frim_department (departmentId, frimId) VALUES (?,?)`; // frim_department插入语句
 let selectDepartmentSql = `
-SELECT d.*, u.name AS leaderName, f.name AS frimName
+SELECT DISTINCT d.*, u.name AS leaderName, f.name AS frimName
 FROM department AS d
 LEFT JOIN user AS u ON u.id = d.leaderId
 LEFT JOIN frim_department as fd ON d.id = fd.departmentId
-LEFT JOIN frim AS f ON f.id = fd.frimId `;
+LEFT JOIN frim AS f ON f.id = fd.frimId
+LIMIT ? OFFSET ?
+`;
+let selectTotleSql = `SELECT COUNT(*) AS total FROM department`;
 let updateDepartmentSql = `UPDATE department SET name = ?, leaderId = ?, msg = ? WHERE id = ?`;
 let updateFrimDepartmentSql = `UPDATE frim_department SET frimId =? WHERE departmentId =?`;
 let deleteDepartment = `DELETE FROM department WHERE id =?`;
@@ -39,10 +42,14 @@ class departmentModel {
     }
   }
   // 获取部门
-  static async getDepartment() {
+  static async getDepartment({ size, page }) {
     try {
-      const [departments] = await pool.execute(selectDepartmentSql);
-      return departments;
+      const [departments] = await pool.query(selectDepartmentSql, [size, page]);
+      const [total] = await pool.query(selectTotleSql);
+      return {
+        data: departments,
+        total: total[0].total,
+      };
     } catch (error) {
       throw error;
     }

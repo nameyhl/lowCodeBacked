@@ -8,7 +8,9 @@ let insertFrimSql = `INSERT INTO frim (id, name, leaderId, msg) VALUES (?,?,?,?)
 let selectFrimSql = `
 SELECT f.*, u.name AS leaderName
 FROM frim AS f
-LEFT JOIN user AS u ON u.id = f.leaderId `; // 查询所有分公司信息
+LEFT JOIN user AS u ON u.id = f.leaderId
+LIMIT ? OFFSET ?`; // 查询所有分公司信息
+let selectTotleSql = `SELECT COUNT(*) AS total FROM frim`;
 
 // 修改语句
 let updateFrimSql = `UPDATE frim SET name =?, leaderId =?, msg =? WHERE id =?`; // 修改分公司信息
@@ -43,10 +45,14 @@ class frimModel {
   }
 
   // 获取所有分公司
-  static async getFrims() {
+  static async getFrims({ size, page }) {
     try {
-      const [frims] = await pool.execute(selectFrimSql);
-      return frims;
+      const [frims] = await pool.query(selectFrimSql, [size, page]);
+      const [total] = await pool.query(selectTotleSql);
+      return {
+        data: frims,
+        total: total[0].total,
+      };
     } catch (error) {
       throw error;
     }

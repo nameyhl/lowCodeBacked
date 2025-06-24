@@ -3,7 +3,7 @@ import pool from "../configs/mysql.js";
 // sql语句
 // 查询语句
 let selectUserSql = `
-SELECT u.*, d.name AS departmentName, f.name AS frimName, TIMESTAMPDIFF(YEAR, birth, CURDATE()) AS age, d.id AS departmentId, uf.frimId AS frimId
+SELECT DISTINCT u.*, d.name AS departmentName, f.name AS frimName, TIMESTAMPDIFF(YEAR, birth, CURDATE()) AS age, d.id AS departmentId, uf.frimId AS frimId
 FROM user AS u 
 LEFT JOIN user_department AS  ud ON u.id = ud.userId
 LEFT JOIN user_frim AS uf ON u.id = uf.userId
@@ -100,7 +100,7 @@ class userModel {
 
   // 查询用户
   static async getUser({ page, size }) {
-    const [result] = await pool.query(selectUserSql, [size, page - 1]);
+    const [result] = await pool.query(selectUserSql, [size, page]);
     const [resultTotle] = await pool.query(selectTotleSql);
     return {
       data: result,
