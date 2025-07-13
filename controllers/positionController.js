@@ -8,6 +8,18 @@ class positionController {
         const result = await positionService.addPosition({ name, departmentId, leaderId });
         return { message: "新增职位成功", result };
     })
+
+    static getPosition = asyncHandler(async (req, res) => {
+        const result = await positionService.getPositions();
+        return result;
+    })
+
+    static deletePosition = asyncHandler(async (req, res) => {
+
+        const { id } = req.query;
+        const result = await positionService.deletePosition(id);
+        return result;
+    })
 }
 
 export default positionController;
