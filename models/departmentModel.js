@@ -1,33 +1,5 @@
 import pool from "../configs/mysql.js";
 
-// sql语句
-let insertDepartmentSql = `INSERT INTO department (id, name, leaderId, msg) VALUES (?,?,?,?)`; // department插入语句
-let insertFrimDepartmentSql = `INSERT INTO frim_department (departmentId, frimId) VALUES (?,?)`; // frim_department插入语句
-let selectDepartmentSqlWithLimit = `
-SELECT DISTINCT d.*, u.name AS leaderName, f.name AS frimName
-FROM department AS d
-LEFT JOIN user AS u ON u.id = d.leaderId
-LEFT JOIN frim_department as fd ON d.id = fd.departmentId
-LEFT JOIN frim AS f ON f.id = fd.frimId
-WHERE 1=1
-`;
-let selectDepartmentSql = `
-SELECT DISTINCT d.*, u.name AS leaderName, f.name AS frimName
-FROM department AS d
-LEFT JOIN user AS u ON u.id = d.leaderId
-LEFT JOIN frim_department as fd ON d.id = fd.departmentId
-LEFT JOIN frim AS f ON f.id = fd.frimId
-`;
-let selectTotleSql = `
-SELECT COUNT(DISTINCT d.id) AS total
-FROM department AS d
-LEFT JOIN frim_department AS fd ON fd.departmentId = d.id
-WHERE 1 = 1`;
-let updateDepartmentSql = `UPDATE department SET name = ?, leaderId = ?, msg = ? WHERE id = ?`;
-let updateFrimDepartmentSql = `UPDATE frim_department SET frimId =? WHERE departmentId =?`;
-let deleteDepartment = `DELETE FROM department WHERE id =?`;
-let deleteFrimDepartment = `DELETE FROM frim_department WHERE departmentId =?`;
-let selectFrimId = `SELECT frimId FROM frim_department WHERE departmentId = ?`;
 class departmentModel {
   // 新增部门
   static async addDepartment({ id, name, frimId, leaderId, msg }) {
@@ -94,6 +66,10 @@ class departmentModel {
 
   // 获取所有部门
   static async getAllDepartment() {
+    let selectDepartmentSql = `
+      SELECT * FROM department
+      WHERE 1 = 1 
+    `;
     try {
       const [departments] = await pool.query(selectDepartmentSql);
       return departments;

@@ -2,10 +2,9 @@ import frimModel from "../models/frimModel.js";
 
 class frimService {
   // 新增分公司
-  static async addFrim({ name, leaderId, msg }) {
+  static async addFrim({ name, msg }) {
     let id = new Date().getTime();
-    if (leaderId === "") leaderId = null;
-    const frim = await frimModel.addFrim({ id, name, leaderId, msg });
+    const frim = await frimModel.addFrim({ id, name, msg });
     return frim;
   }
 

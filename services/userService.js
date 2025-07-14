@@ -13,14 +13,13 @@ class userService {
     wechat,
     departmentId,
     phone,
+    positionId,
     password,
+    frimId,
   }) {
     // 使用uuid生成唯一id
     let id = uuidv4();
     birth = new Date(birth);
-    // 查询frimId
-    const frimIdList = await departmentModel.getFrimId(departmentId);
-    const frimId = frimIdList[0].frimId;
     // 调用userModels的addUser方法
     const user = await userModel.addUser({
       id,
@@ -33,6 +32,7 @@ class userService {
       phone,
       departmentId,
       password,
+      positionId,
       frimId,
     });
     return user;
@@ -63,11 +63,11 @@ class userService {
     wechat,
     departmentId,
     phone,
+    positionId,
+    frimId,
   }) {
     birth = new Date(birth);
     // 查询frimId
-    const frimIdList = await departmentModel.getFrimId(departmentId);
-    const frimId = frimIdList[0].frimId;
     const user = await userModel.updateUser({
       id,
       username,
@@ -78,6 +78,7 @@ class userService {
       wechat,
       departmentId,
       phone,
+      positionId,
       frimId,
     });
     return user;
@@ -95,8 +96,12 @@ class userService {
   }
 
   // 根据frimId查询用户
-  static async getUserByFrimId(frimId) {
-    const user = await userModel.getUserByFrimId(frimId);
+  static async getAllUser(frimId, departmentId, positionId) {
+    const user = await userModel.getAllUser({
+      frimId,
+      departmentId,
+      positionId,
+    });
     return user;
   }
   static async searchUser({ page, size, username, name, departmentId }) {

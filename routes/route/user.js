@@ -9,5 +9,5 @@ router.get("/getUser", userController.getUser);
 router.post("/updateUser", userController.updateUser);
 router.delete("/deleteUser", userController.deleteUser);
 router.get("/getUserByDepartmentId", userController.getUserByDepartmentId);
-router.get("/getUserByFrimId", userController.getUserByFrimId);
+router.get("/getAllUser", userController.getAllUser);
 export default router;

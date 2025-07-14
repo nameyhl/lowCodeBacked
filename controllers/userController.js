@@ -13,7 +13,9 @@ class userController {
       wechat,
       departmentId,
       password,
+      positionId,
       phone,
+      frimId,
     } = req.body;
     const result = await userService.addUser({
       username,
@@ -25,6 +27,8 @@ class userController {
       wechat,
       departmentId,
       password,
+      positionId,
+      frimId,
     });
     return result;
   });
@@ -53,6 +57,8 @@ class userController {
       wechat,
       departmentId,
       phone,
+      positionId,
+      frimId,
     } = req.body;
     const result = await userService.updateUser({
       id,
@@ -64,6 +70,8 @@ class userController {
       wechat,
       departmentId,
       phone,
+      positionId,
+      frimId,
     });
     return result;
   });
@@ -81,9 +89,13 @@ class userController {
   });
 
   // 根据frimId查询用户
-  static getUserByFrimId = asyncHandler(async (req) => {
-    const { frimId } = req.query;
-    const result = await userService.getUserByFrimId(frimId);
+  static getAllUser = asyncHandler(async (req) => {
+    const { frimId, departmentId, positionId } = req.query;
+    const result = await userService.getAllUser(
+      frimId,
+      departmentId,
+      positionId
+    );
     return result;
   });
 
