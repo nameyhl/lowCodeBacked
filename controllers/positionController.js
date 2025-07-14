@@ -4,13 +4,14 @@ import { asyncHandler } from "../utils/responseHandler.js";
 
 class positionController {
     static addPosition = asyncHandler(async (req, res) => {
-        const { name, departmentId, leaderId } = req.body;
-        const result = await positionService.addPosition({ name, departmentId, leaderId });
+        const { name, departmentId, msg, frimId } = req.body;
+        const result = await positionService.addPosition({ name, departmentId, msg, frimId });
         return { message: "新增职位成功", result };
     })
 
     static getPosition = asyncHandler(async (req, res) => {
-        const result = await positionService.getPositions();
+        let { departmentId, name, page, size } = req.query;
+        const result = await positionService.getPositions({ departmentId, name, page, size });
         return result;
     })
 

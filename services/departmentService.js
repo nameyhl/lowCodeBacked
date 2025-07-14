@@ -24,7 +24,7 @@ class departmentService {
       });
       return department;
     } else {
-      const department = await departmentModel.getAllDepartment();
+      const department = await departmentModel.getAllDepartment({ name, frimId });
       return department;
     }
   }

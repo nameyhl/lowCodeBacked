@@ -3,29 +3,33 @@ import pool from "../configs/mysql.js";
 class departmentModel {
   // 新增部门
   static async addDepartment({ id, name, frimId, leaderId, msg }) {
-    // 开启事务
-    const transaction = await pool.beginTransaction();
+    let sql = `
+    INSERT INTO department (id, name, frimId, leaderId, msg)
+    VALUES (?, ?, ?, ?, ?)
+    `
     try {
-      // 插入部门信息
-      const [department] = await transaction.query(insertDepartmentSql, [
-        id,
-        name,
-        leaderId,
-        msg,
-      ]);
-      // 插入部门与组织关系
-      await transaction.query(insertFrimDepartmentSql, [id, frimId]);
-      // 提交事务
-      await transaction.commit();
+      const [department] = await pool.query(sql, [id, name, frimId, leaderId, msg]);
       return department;
     } catch (error) {
-      // 出错时回滚
-      await transaction.rollback();
       throw error;
     }
   }
   // 获取部门
   static async getDepartment({ name, frimId, size, page }) {
+    let selectDepartmentSqlWithLimit = `
+    SELECT d.*, f.name AS frimName, u.name AS leaderName
+    FROM department AS d
+    LEFT JOIN frim AS f ON f.id = d.frimId
+    LEFT JOIN user AS u ON u.id = f.leaderId
+    WHERE 1 = 1
+    `;
+    let selectTotleSql = `
+    SELECT COUNT(DISTINCT d.id) AS total
+    FROM department AS d
+    LEFT JOIN frim AS f ON f.id = d.frimId
+    LEFT JOIN user AS u ON u.id = f.leaderId
+    WHERE 1 = 1
+    `;
     try {
       if (name) {
         selectDepartmentSqlWithLimit += ` AND d.name LIKE '%${name}%'`;
@@ -40,21 +44,7 @@ class departmentModel {
         size,
         page,
       ]);
-      selectDepartmentSqlWithLimit = `
-        SELECT DISTINCT d.*, u.name AS leaderName, f.name AS frimName
-        FROM department AS d
-        LEFT JOIN user AS u ON u.id = d.leaderId
-        LEFT JOIN frim_department as fd ON d.id = fd.departmentId
-        LEFT JOIN frim AS f ON f.id = fd.frimId
-        WHERE 1=1
-      `;
       const [total] = await pool.query(selectTotleSql);
-      selectTotleSql = `
-        SELECT COUNT(DISTINCT d.id) AS total
-        FROM department AS d
-        LEFT JOIN frim_department AS fd ON fd.frimId = d.id
-        WHERE 1 = 1
-      `;
       return {
         data: departments,
         total: total[0].total,
@@ -65,11 +55,19 @@ class departmentModel {
   }
 
   // 获取所有部门
-  static async getAllDepartment() {
+  static async getAllDepartment({ name, frimId }) {
     let selectDepartmentSql = `
-      SELECT * FROM department
+      SELECT d.*, f.name AS frimName
+      FROM department AS d
+      LEFT JOIN frim AS f ON f.id = d.frimId
       WHERE 1 = 1 
     `;
+    if (name) {
+      selectDepartmentSql += ` AND d.name LIKE '%${name}%'`;
+    }
+    if (frimId) {
+      selectDepartmentSql += ` AND d.frimId = ${frimId}`;
+    }
     try {
       const [departments] = await pool.query(selectDepartmentSql);
       return departments;
