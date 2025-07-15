@@ -14,10 +14,10 @@ class userModel {
       frimId,
       positionId,
       phone,
+      isEmp,
     } = obj;
-    // 开始事务
     try {
-      let sql = `INSERT INTO user (id, username, name, nikename, birth, email, wechat, departmentId, frimId,positionId, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      let sql = `INSERT INTO user (id, username, name, nikename, birth, email, wechat, departmentId, frimId,positionId, phone, isEmp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
       let [result] = await pool.query(sql, [
         id,
         username,
@@ -30,6 +30,7 @@ class userModel {
         frimId,
         positionId,
         phone,
+        isEmp,
       ]);
       return result;
     } catch (error) {

@@ -16,6 +16,7 @@ class userController {
       positionId,
       phone,
       frimId,
+      isEmp,
     } = req.body;
     const result = await userService.addUser({
       username,
@@ -29,6 +30,7 @@ class userController {
       password,
       positionId,
       frimId,
+      isEmp,
     });
     return result;
   });

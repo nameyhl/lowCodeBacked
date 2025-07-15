@@ -16,6 +16,7 @@ class userService {
     positionId,
     password,
     frimId,
+    isEmp,
   }) {
     // 使用uuid生成唯一id
     let id = uuidv4();
@@ -34,6 +35,7 @@ class userService {
       password,
       positionId,
       frimId,
+      isEmp,
     });
     return user;
   }
