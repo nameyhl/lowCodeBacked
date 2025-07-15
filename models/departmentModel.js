@@ -6,9 +6,15 @@ class departmentModel {
     let sql = `
     INSERT INTO department (id, name, frimId, leaderId, msg)
     VALUES (?, ?, ?, ?, ?)
-    `
+    `;
     try {
-      const [department] = await pool.query(sql, [id, name, frimId, leaderId, msg]);
+      const [department] = await pool.query(sql, [
+        id,
+        name,
+        frimId,
+        leaderId,
+        msg,
+      ]);
       return department;
     } catch (error) {
       throw error;
@@ -77,42 +83,34 @@ class departmentModel {
   }
   // 修改部门
   static async updateDepartment({ id, name, frimId, leaderId, msg }) {
-    //开启事务
-    const transaction = await pool.beginTransaction();
+    let updateSql = `
+    UPDATE department
+    SET name = ?, frimId = ?, leaderId = ?, msg = ?
+    WHERE id = ?
+    `;
     try {
-      // 修改部门信息
-      const [department] = await transaction.query(updateDepartmentSql, [
+      const [department] = await pool.query(updateSql, [
         name,
+        frimId,
         leaderId,
         msg,
         id,
       ]);
-      // 修改部门与组织关系
-      await transaction.query(updateFrimDepartmentSql, [frimId, id]);
-      // 提交事务
-      await transaction.commit();
       return department;
     } catch (error) {
-      // 回滚事务
-      await transaction.rollback();
+      throw error;
     }
   }
+
   // 删除部门
   static async deleteDepartment(id) {
-    // 创建事务
-    const connection = await pool.getConnection();
+    let deleteSql = `
+    DELETE FROM department WHERE id = ?
+    `;
     try {
-      // 开启事务
-      await connection.beginTransaction();
-      // 删除部门与组织关系
-      await connection.execute(deleteFrimDepartment, [id]);
-      // 删除部门信息
-      await connection.execute(deleteDepartment, [id]);
-      // 提交事务
-      await connection.commit();
+      const [department] = await pool.query(deleteSql, [id]);
+      return department;
     } catch (error) {
-      // 回滚事务
-      await connection.rollback();
       throw error;
     }
   }

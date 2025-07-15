@@ -9,8 +9,6 @@ class routesModels {
 
   // 新增路由
   static async addRoute({ id, name, router, view, level, parentId, isShow }) {
-    console.log({ id, name, router, view, level, parentId, isShow });
-
     const [result] = await pool.query(
       "INSERT INTO routes (id, name, router, view, level, parentId, isShow) values (? ,? ,? ,? ,? ,? ,?)",
       [id, name, router, view, level, parentId, isShow]

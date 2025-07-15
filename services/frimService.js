@@ -1,4 +1,5 @@
 import frimModel from "../models/frimModel.js";
+import departmentModel from "../models/departmentModel.js";
 
 class frimService {
   // 新增分公司
@@ -23,6 +24,12 @@ class frimService {
 
   // 删除分公司
   static async deleteFrim(id) {
+    const department = await departmentModel.getAllDepartment({ frimId: id });
+    if (department.length > 0) {
+      const error = new Error("该分公司下仍然存在部门，请清空后再删除");
+      error.status = 400;
+      throw error;
+    }
     const frim = await frimModel.deleteFrim(id);
     return frim;
   }

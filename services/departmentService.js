@@ -1,4 +1,5 @@
 import departmentModel from "../models/departmentModel.js";
+import positionModel from "../models/positionModel.js";
 
 class departmentService {
   // 新增部门
@@ -7,7 +8,6 @@ class departmentService {
     if (!leaderId) leaderId = null;
     if (!frimId) frimId = null;
     if (!msg) msg = null;
-    console.log(name, frimId, leaderId, msg);
     await departmentModel.addDepartment({ id, name, frimId, leaderId, msg });
     return "新增成功";
   }
@@ -24,13 +24,15 @@ class departmentService {
       });
       return department;
     } else {
-      const department = await departmentModel.getAllDepartment({ name, frimId });
+      const department = await departmentModel.getAllDepartment({
+        name,
+        frimId,
+      });
       return department;
     }
   }
   //  修改部门信息
   static async updateDepartment({ id, name, frimId, leaderId, msg }) {
-    console.log(id, name, frimId, leaderId, msg);
     if (leaderId === "") leaderId = null;
     const department = await departmentModel.updateDepartment({
       id,
@@ -43,6 +45,12 @@ class departmentService {
   }
   // 删除部门
   static async deleteDepartment(id) {
+    const position = await positionModel.getALlPosition({ departmentId: id });
+    if (position.length > 0) {
+      const error = new Error("该部门下仍然存在岗位，请清空后再删除");
+      error.status = 400;
+      throw error;
+    }
     const department = await departmentModel.deleteDepartment(id);
     return department;
   }
