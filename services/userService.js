@@ -1,4 +1,5 @@
 import userModel from "../models/userModel.js";
+import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 
 class userService {
@@ -60,7 +61,13 @@ class userService {
       error.status = 400;
       throw error;
     }
-    return user[0];
+    // 生成token
+    const token = jwt.sign(
+      { userId: user[0].id, username: user[0].username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+    return { ...user[0], token };
   }
   // 获取用户
   static async getUser({ page, size, username, name, departmentId }) {
