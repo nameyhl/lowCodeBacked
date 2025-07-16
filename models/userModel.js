@@ -62,8 +62,8 @@ class userModel {
       selectTotleSql += `\nAND u.name LIKE '%${name}%'`;
     }
     if (departmentId) {
-      selectUserSql += `\nAND ud.departmentId = ${departmentId}`;
-      selectTotleSql += `\nAND ud.departmentId = ${departmentId}`;
+      selectUserSql += `\nAND u.departmentId = ${departmentId}`;
+      selectTotleSql += `\nAND u.departmentId = ${departmentId}`;
     }
     selectUserSql += `\nLIMIT ? OFFSET ?`;
     const [result] = await pool.query(selectUserSql, params);
@@ -72,6 +72,12 @@ class userModel {
       data: result,
       total: resultTotle[0].total,
     };
+  }
+  // 根据电话号码查询用户
+  static async getUserByPhone(phone) {
+    let sql = `SELECT * FROM user WHERE phone = ?`;
+    const [result] = await pool.query(sql, [phone]);
+    return result;
   }
 
   static async getAllUser({ departmentId, frimId, positionId }) {

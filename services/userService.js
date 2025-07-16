@@ -1,5 +1,4 @@
 import userModel from "../models/userModel.js";
-import departmentModel from "../models/departmentModel.js";
 import { v4 as uuidv4 } from "uuid";
 
 class userService {
@@ -21,8 +20,15 @@ class userService {
     // 使用uuid生成唯一id
     let id = uuidv4();
     birth = new Date(birth);
+    // 验证手机号是否已存在
+    const user = await userModel.getUserByPhone(phone);
+    if (user.length > 0) {
+      const error = new Error("手机号已存在");
+      error.status = 400;
+      throw error;
+    }
     // 调用userModels的addUser方法
-    const user = await userModel.addUser({
+    const result = await userModel.addUser({
       id,
       username,
       name,
@@ -37,7 +43,7 @@ class userService {
       frimId,
       isEmp,
     });
-    return user;
+    return result;
   }
 
   // 获取用户
