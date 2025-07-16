@@ -1,6 +1,6 @@
 import userModel from "../models/userModel.js";
-import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
+import CommonUtils from "../utils/utils.js";
 
 class userService {
   // 新增用户
@@ -62,11 +62,7 @@ class userService {
       throw error;
     }
     // 生成token
-    const token = jwt.sign(
-      { userId: user[0].id, username: user[0].username },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+    const token = CommonUtils.generateToken({ userId: user[0].id, username: user[0].username });
     return { ...user[0], token };
   }
   // 获取用户

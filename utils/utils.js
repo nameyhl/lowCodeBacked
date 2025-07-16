@@ -1,5 +1,8 @@
 // 工具类方法
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 
+dotenv.config();
 
 class CommonUtils {
   static buildTree(items, parentId = '') {
@@ -16,5 +19,25 @@ class CommonUtils {
         };
       });
   }
+
+  // 生成jwt令牌
+  static generateToken(payload) {
+    const secret = process.env.JWT_SECRET;
+    const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    return token;
+  }
+
+  // 验证jwt
+  static verifyToken(token) {
+    const secret = process.env.JWT_SECRET;
+    try {
+      const decoded = jwt.verify(token, secret);
+      return decoded;
+    } catch (error) {
+      error.status = 400;
+      throw error;
+    }
+  }
 }
 export default CommonUtils;
+
