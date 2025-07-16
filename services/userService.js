@@ -46,6 +46,22 @@ class userService {
     return result;
   }
 
+  static async login({ phone, password }) {
+    // 通过手机号获取用户
+    const user = await userModel.getUserByPhone(phone);
+    if (user.length === 0) {
+      const error = new Error("手机号未注册");
+      error.status = 400;
+      throw error;
+    }
+    // 判断密码是否正确
+    if (user[0].password !== password) {
+      const error = new Error("密码错误");
+      error.status = 400;
+      throw error;
+    }
+    return user[0];
+  }
   // 获取用户
   static async getUser({ page, size, username, name, departmentId }) {
     page = Number((page - 1) * size);

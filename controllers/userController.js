@@ -34,6 +34,11 @@ class userController {
     });
     return result;
   });
+  static login = asyncHandler(async (req) => {
+    const { phone, password } = req.body;
+    const result = await userService.login({ phone, password });
+    return result;
+  });
   // 查询用户
   static getUser = asyncHandler(async (req) => {
     let { page, size, username, name, departmentId } = req.query;
