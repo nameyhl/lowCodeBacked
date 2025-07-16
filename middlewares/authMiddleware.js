@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
-import config from "../configs/mysql.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export default function authMiddleware(req, res, next) {
-  console.log(process.env.JWT_SECRET);
+  console.log("JWT_SECRET:", process.env.JWT_SECRET);
   next();
 }
