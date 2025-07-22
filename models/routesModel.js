@@ -7,6 +7,10 @@ class routesModels {
     return routes;
   }
 
+  static async getRoutes({ name }) {
+    const [routes] = await pool.query("SELECT * FROM routes WHERE name = ?", [name]);
+    return routes;
+  }
   // 新增路由
   static async addRoute({ id, name, router, view, level, parentId, isShow }) {
     const [result] = await pool.query(
@@ -37,6 +41,14 @@ class routesModels {
       [parentId]
     );
     return routes;
+  }
+
+  // 根据路由路径查询路由
+  static async getRouteByRouter(path) {
+    const [route] = await pool.query("SELECT * FROM routes WHERE router = ?", [
+      path,
+    ]);
+    return route;
   }
 
   // 修改路由

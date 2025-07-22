@@ -5,12 +5,27 @@ import CommonUtils from "../utils/utils.js";
 
 class routesService {
   // 获取所有路由
-  static async getRoutes() {
-    const routes = await routesModel.getAllRoutes();
-    let result = {
-      tree: CommonUtils.buildTree(routes),
-      list: routes,
-    };
+  static async getRoutes({ name }) {
+    let result = {};
+    if (name) {
+      const routes = await routesModel.getRoutes({ name });
+      const aws = await routesModel.getChildrenRoutes(routes[0].id);
+      result =
+        [
+          {
+            ...routes[0],
+            children: aws
+          }
+        ]
+        ;
+    } else {
+      const routes = await routesModel.getAllRoutes();
+      result = {
+        tree: CommonUtils.buildTree(routes),
+        list: routes,
+      };
+    }
+
     return result;
   }
 

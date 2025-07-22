@@ -6,13 +6,22 @@ import { asyncHandler } from "../utils/responseHandler.js";
 class routesController {
   // 获取所有路由
   static getRoutes = asyncHandler(async (req) => {
-    const routes = await routesService.getRoutes();
+    const { name } = req.query;
+    const routes = await routesService.getRoutes({ name });
+    return routes;
+  });
+
+  static getRoutesByParentId = asyncHandler(async (req) => {
+    const { parentId } = req.body;
+    const routes = await routesService.getRoutesByParentId(parentId);
     return routes;
   });
 
   // 新增路由
   static addRoute = asyncHandler(async (req) => {
-    const { name, router, view, level, parentId, isShow } = req.body;
+    const { name, router, view, level, parentId, isShow } = req.body
+    console.log(123);
+    ;
     const result = await routesService.addRoute({
       name,
       router,
