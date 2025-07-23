@@ -10,12 +10,15 @@ class routesService {
     if (name) {
       const routes = await routesModel.getRoutes({ name });
       const aws = await routesModel.getChildrenRoutes(routes[0].id);
+      const nullParentRoute = await routesModel.getRoutesWhereParentIdNull();
+      const res = nullParentRoute.filter(item => item.name !== name)
       result =
         [
           {
             ...routes[0],
             children: aws
-          }
+          },
+          ...res
         ]
         ;
     } else {

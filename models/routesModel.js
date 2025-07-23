@@ -11,6 +11,13 @@ class routesModels {
     const [routes] = await pool.query("SELECT * FROM routes WHERE name = ?", [name]);
     return routes;
   }
+
+  // 查询父id为空的路由
+  static async getRoutesWhereParentIdNull() {
+    const [routes] = await pool.query("SELECT * FROM routes WHERE parentId = ''");
+    return routes;
+  }
+
   // 新增路由
   static async addRoute({ id, name, router, view, level, parentId, isShow }) {
     const [result] = await pool.query(
