@@ -20,7 +20,6 @@ class routesService {
           },
           ...res
         ]
-        ;
     } else {
       const routes = await routesModel.getAllRoutes();
       result = {
