@@ -8,7 +8,7 @@ export const successResponse = (data = null, msg = "操作成功") => {
   return {
     status: 200,
     msg,
-    data,
+    data
   };
 };
 
@@ -26,7 +26,7 @@ export const errorResponse = (
 ) => {
   const response = {
     status,
-    msg,
+    msg
   };
   console.error(error);
   // 只在开发环境下返回错误详情
@@ -41,11 +41,12 @@ export const errorResponse = (
  * @param {Function} handler 控制器函数
  * @returns {Function} 包装后的中间件函数
  */
-export const asyncHandler = (handler) => {
+export const asyncHandler = handler => {
   return async (req, res, next) => {
     try {
       const result = await handler(req, res, next);
-      res.json(successResponse(result));
+      const { msg, data } = result;
+      res.json(successResponse(data, msg));
     } catch (error) {
       const status = error.status || 500;
       const message = error.message || "服务器错误";

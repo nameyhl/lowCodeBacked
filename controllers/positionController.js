@@ -8,9 +8,9 @@ class positionController {
       name,
       departmentId,
       msg,
-      frimId,
+      frimId
     });
-    return { message: "新增职位成功", result };
+    return { message: "新增职位成功", data: null };
   });
 
   static getPosition = asyncHandler(async (req, res) => {
@@ -19,9 +19,12 @@ class positionController {
       departmentId,
       name,
       page,
-      size,
+      size
     });
-    return result;
+    return {
+      msg: "获取职位成功",
+      data: result
+    };
   });
 
   static deletePosition = asyncHandler(async (req, res) => {
@@ -35,9 +38,12 @@ class positionController {
       id,
       name,
       leaderId,
-      msg,
+      msg
     });
-    return result;
+    return {
+      msg: "修改职位成功",
+      data: null
+    };
   });
 }
 

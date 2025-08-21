@@ -9,9 +9,12 @@ class departmentController {
       name,
       frimId,
       leaderId,
-      msg,
+      msg
     });
-    return department;
+    return {
+      msg: "新增部门成功",
+      data: null
+    };
   });
 
   // 获取部门列表
@@ -21,9 +24,12 @@ class departmentController {
       name,
       frimId,
       page,
-      size,
+      size
     });
-    return department;
+    return {
+      msg: "获取部门成功",
+      data: department
+    };
   });
   // 修改部门信息
   static updateDepartment = asyncHandler(async (req, res, next) => {
@@ -33,15 +39,21 @@ class departmentController {
       name,
       frimId,
       leaderId,
-      msg,
+      msg
     });
-    return department;
+    return {
+      msg: "修改部门成功",
+      data: null
+    };
   });
   // 删除部门信息
   static deleteDepartment = asyncHandler(async (req, res, next) => {
     const { id } = req.query;
     const department = await departmentService.deleteDepartment(id);
-    return department;
+    return {
+      msg: "删除部门成功",
+      data: null
+    };
   });
 }
 

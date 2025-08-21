@@ -3,7 +3,7 @@ import { asyncHandler } from "../utils/responseHandler.js";
 
 class userController {
   // 新增用户
-  static addUser = asyncHandler(async (req) => {
+  static addUser = asyncHandler(async req => {
     const {
       username,
       name,
@@ -16,7 +16,7 @@ class userController {
       positionId,
       phone,
       frimId,
-      isEmp,
+      isEmp
     } = req.body;
     const result = await userService.addUser({
       username,
@@ -30,30 +30,36 @@ class userController {
       password,
       positionId,
       frimId,
-      isEmp,
+      isEmp
     });
     return result;
   });
-  static login = asyncHandler(async (req) => {
+  static login = asyncHandler(async req => {
     const { phone, password } = req.body;
     const result = await userService.login({ phone, password });
-    return result;
+    return {
+      msg: "登录成功",
+      data: result
+    };
   });
   // 查询用户
-  static getUser = asyncHandler(async (req) => {
+  static getUser = asyncHandler(async req => {
     let { page, size, username, name, departmentId } = req.query;
     const result = await userService.getUser({
       page,
       size,
       username,
       name,
-      departmentId,
+      departmentId
     });
-    return result;
+    return {
+      msg: "查询用户成功",
+      data: result
+    };
   });
 
   // 修改用户
-  static updateUser = asyncHandler(async (req) => {
+  static updateUser = asyncHandler(async req => {
     const {
       id,
       username,
@@ -65,7 +71,7 @@ class userController {
       departmentId,
       phone,
       positionId,
-      frimId,
+      frimId
     } = req.body;
     const result = await userService.updateUser({
       id,
@@ -78,45 +84,60 @@ class userController {
       departmentId,
       phone,
       positionId,
-      frimId,
+      frimId
     });
-    return result;
+    return {
+      msg: "修改用户成功",
+      data: null
+    };
   });
   // 删除用户
-  static deleteUser = asyncHandler(async (req) => {
+  static deleteUser = asyncHandler(async req => {
     const { id } = req.query;
     const result = await userService.deleteUser(id);
-    return result;
+    return {
+      msg: "删除用户成功",
+      data: null
+    };
   });
   // 根据departmentId查询用户
-  static getUserByDepartmentId = asyncHandler(async (req) => {
+  static getUserByDepartmentId = asyncHandler(async req => {
     const { departmentId } = req.query;
     const result = await userService.getUserByDepartmentId(departmentId);
-    return result;
+    return {
+      msg: "根据departmentId查询用户成功",
+      data: result
+    };
   });
 
   // 根据frimId查询用户
-  static getAllUser = asyncHandler(async (req) => {
+  static getAllUser = asyncHandler(async req => {
     const { frimId, departmentId, positionId } = req.query;
     const result = await userService.getAllUser(
       frimId,
       departmentId,
       positionId
     );
-    return result;
+    return {
+      msg: "根据frimId查询用户成功",
+      data: result
+    };
   });
 
   // 查询用户
-  static searchUser = asyncHandler(async (req) => {
+  static searchUser = asyncHandler(async req => {
     const { page, size, username, name, departmentId } = req.body;
     const result = await userService.searchUser({
       page,
       size,
       username,
       name,
-      departmentId,
+      departmentId
     });
-    return result;
+    return {
+      msg: "查询用户成功",
+      data: result
+    };
   });
 }
 

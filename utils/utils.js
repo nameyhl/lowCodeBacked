@@ -1,11 +1,11 @@
 // 工具类方法
-import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 
 class CommonUtils {
-  static buildTree(items, parentId = '') {
+  static buildTree(items, parentId = "") {
     return items
       .filter(item => item.parentId === parentId)
       .map(item => {
@@ -23,7 +23,7 @@ class CommonUtils {
   // 生成jwt令牌
   static generateToken(payload) {
     const secret = process.env.JWT_SECRET;
-    const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    const token = jwt.sign(payload, secret, { expiresIn: "1h" });
     return token;
   }
 
@@ -38,6 +38,13 @@ class CommonUtils {
       throw error;
     }
   }
+
+  // 生成一个唯一的四位数code
+  static generateTimeBasedCode() {
+    const now = new Date();
+    const timePart = now.getTime().toString(36).slice(-3).toUpperCase();
+    const randomChar = Math.random().toString(36).charAt(2).toUpperCase();
+    return timePart + randomChar;
+  }
 }
 export default CommonUtils;
-

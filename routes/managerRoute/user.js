@@ -11,4 +11,5 @@ router.delete("/deleteUser", userController.deleteUser);
 router.get("/getUserByDepartmentId", userController.getUserByDepartmentId);
 router.get("/getAllUser", userController.getAllUser);
 router.post("/login", userController.login);
+
 export default router;
