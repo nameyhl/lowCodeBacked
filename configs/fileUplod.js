@@ -3,8 +3,12 @@ import path from "path";
 
 const storage = multer.diskStorage({
   destination: "C:/Users/yyy/Desktop/11/nginx-1.28.0/html/uploads",
+
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()} - ${file.originalname}`);
+    const encodedName = Buffer.from(file.originalname, "latin1").toString(
+      "utf8"
+    );
+    cb(null, `${Date.now()} - ${encodedName}`);
   }
 });
 

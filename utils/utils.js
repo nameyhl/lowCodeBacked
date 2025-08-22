@@ -46,5 +46,13 @@ class CommonUtils {
     const randomChar = Math.random().toString(36).charAt(2).toUpperCase();
     return timePart + randomChar;
   }
+
+  // 将再数据库中查询到的时间数据改为YYYY-MM-DD格式
+  static formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 }
 export default CommonUtils;

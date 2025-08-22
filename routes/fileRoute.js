@@ -11,7 +11,8 @@ router.post("/upload", upload.single("file"), (req, res) => {
   res.json({
     msg: "上传成功",
     data: {
-      url: req.file.filename
+      url: `/uploads/${req.file.filename}`,
+      name: Buffer.from(req.file.originalname, "latin1").toString("utf8")
     }
   });
 });

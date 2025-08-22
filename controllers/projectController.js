@@ -3,11 +3,14 @@ import { asyncHandler } from "../utils/responseHandler.js";
 
 class projectController {
   static addProject = asyncHandler(async (req, res) => {
-    const { name, leaderId, msg } = req.body;
+    const { name, leaderId, msg, endTime, filePath, fileName } = req.body;
     const result = await projectService.addProject({
       name,
       leaderId,
-      msg
+      msg,
+      endTime,
+      filePath,
+      fileName
     });
     return { msg: "新增项目成功", data: null };
   });

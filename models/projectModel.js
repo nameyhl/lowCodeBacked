@@ -15,11 +15,25 @@ class projectModel {
     leaderId,
     msg,
     createTime,
-    status
+    status,
+    endTime,
+    filePath,
+    fileName
   }) {
     const [result] = await pool.query(
-      `INSERT INTO project (id, code, name, leaderId, msg, createTime, status) values (?,?,?,?,?,?,?)`,
-      [id, code, name, leaderId, msg, createTime, status]
+      `INSERT INTO project (id, code, name, leaderId, msg, createTime, status, endTime, filePath, fileName) values (?,?,?,?,?,?,?,?,?,?)`,
+      [
+        id,
+        code,
+        name,
+        leaderId,
+        msg,
+        createTime,
+        status,
+        endTime,
+        filePath,
+        fileName
+      ]
     );
     return result.affectedRows;
   }

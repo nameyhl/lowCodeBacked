@@ -26,7 +26,6 @@ class routesController {
   // 新增路由
   static addRoute = asyncHandler(async req => {
     const { name, router, view, level, parentId, isShow } = req.body;
-    console.log(123);
     const result = await routesService.addRoute({
       name,
       router,

@@ -9,22 +9,21 @@ class routesService {
     let result = {};
     if (name) {
       const routes = await routesModel.getRoutes({ name });
-      const aws = await routesModel.getChildrenRoutes(routes[0].id);
+      let aws = await routesModel.getChildrenRoutes(routes[0].id);
       const nullParentRoute = await routesModel.getRoutesWhereParentIdNull();
-      const res = nullParentRoute.filter(item => item.name !== name)
-      result =
-        [
-          {
-            ...routes[0],
-            children: aws
-          },
-          ...res
-        ]
+      const res = nullParentRoute.filter(item => item.name !== name);
+      result = [
+        {
+          ...routes[0],
+          children: aws
+        },
+        ...res
+      ];
     } else {
       const routes = await routesModel.getAllRoutes();
       result = {
         tree: CommonUtils.buildTree(routes),
-        list: routes,
+        list: routes
       };
     }
 
@@ -88,7 +87,7 @@ class routesService {
     view,
     level,
     parentId,
-    isShow,
+    isShow
   }) {
     const routes = await routesModel.searchRoutes({
       id,
@@ -97,7 +96,7 @@ class routesService {
       view,
       level,
       parentId,
-      isShow,
+      isShow
     });
     return routes;
   }

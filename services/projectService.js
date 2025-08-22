@@ -2,7 +2,18 @@ import projectModel from "../models/projectModel.js";
 import CommonUtils from "../utils/utils.js";
 
 class projectService {
-  static async addProject({ name, leaderId, msg }) {
+  static async addProject({
+    name,
+    leaderId,
+    msg,
+    endTime,
+    filePath,
+    fileName
+  }) {
+    if (endTime) {
+      endTime = new Date(endTime);
+    }
+
     const id = new Date().getTime();
     const createTime = new Date();
     const status = 0;
@@ -14,7 +25,10 @@ class projectService {
       leaderId,
       msg,
       createTime,
-      status
+      status,
+      endTime,
+      filePath,
+      fileName
     });
     return result;
   }
@@ -35,6 +49,12 @@ class projectService {
 
   static async getProjectListByLeaderId(leaderId) {
     const result = await projectModel.getProjectListByLeaderId(leaderId);
+
+    result.forEach(item => {
+      item.endTime = CommonUtils.formatDate(item.endTime);
+      item.createTime = CommonUtils.formatDate(item.createTime);
+    });
+
     return result;
   }
 
