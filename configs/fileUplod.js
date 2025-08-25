@@ -2,9 +2,10 @@ import multer from "multer";
 import path from "path";
 
 const storage = multer.diskStorage({
-  destination: "C:/Users/yyy/Desktop/11/nginx-1.28.0/html/uploads",
+  destination: "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads",
 
   filename: (req, file, cb) => {
+    console.log(file);
     const encodedName = Buffer.from(file.originalname, "latin1").toString(
       "utf8"
     );

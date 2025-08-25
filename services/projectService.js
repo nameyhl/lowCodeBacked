@@ -18,7 +18,7 @@ class projectService {
     const createTime = new Date();
     const status = 0;
     const code = CommonUtils.generateTimeBasedCode();
-    const result = await projectModel.addProject({
+    await projectModel.addProject({
       id,
       code,
       name,
@@ -30,7 +30,7 @@ class projectService {
       filePath,
       fileName
     });
-    return result;
+    return id;
   }
 
   static async getProjectByCode(code) {

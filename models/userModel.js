@@ -14,7 +14,7 @@ class userModel {
       frimId,
       positionId,
       phone,
-      isEmp,
+      isEmp
     } = obj;
     try {
       let sql = `INSERT INTO user (id, username, name, nikename, birth, email, wechat, departmentId, frimId,positionId, phone, isEmp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -30,7 +30,7 @@ class userModel {
         frimId,
         positionId,
         phone,
-        isEmp,
+        isEmp
       ]);
       return result;
     } catch (error) {
@@ -70,7 +70,7 @@ class userModel {
     const [resultTotle] = await pool.query(selectTotleSql);
     return {
       data: result,
-      total: resultTotle[0].total,
+      total: resultTotle[0].total
     };
   }
   // 根据电话号码查询用户
@@ -106,7 +106,7 @@ class userModel {
       departmentId,
       frimId,
       positionId,
-      phone,
+      phone
     } = data;
     try {
       let sql = `UPDATE user SET username = ?, name = ?, nikename = ?, birth = ?, email = ?, wechat = ?, departmentId = ?, frimId = ?, positionId = ?, phone = ? WHERE id = ?`;
@@ -121,7 +121,7 @@ class userModel {
         frimId,
         positionId,
         phone,
-        id,
+        id
       ]);
       return result;
     } catch (error) {
@@ -130,7 +130,6 @@ class userModel {
   }
   // 删除用户
   static async deleteUser(id) {
-    // 创建事务
     let deleteSql = `DELETE FROM user WHERE id = ?`;
     try {
       let result = await pool.query(deleteSql, [id]);
@@ -143,8 +142,20 @@ class userModel {
   // 根据departmentId查询用户
   static async getUserByDepartmentId(departmentId) {
     const [result] = await pool.query(selectUserByDepartmentIdSql, [
-      departmentId,
+      departmentId
     ]);
+    return result;
+  }
+
+  // 查询user的frimLeader和departmentLeader
+  static async getFrimLeaderAndDepartmentLader(userId) {
+    let getFrimLeaderSql = `
+    SELECT frim_leader_id AS frimLeader, department_leader_id as departmentLeader
+FROM
+user_leader
+WHERE id = ?
+    `;
+    const [result] = await pool.query(getFrimLeaderSql, [userId]);
     return result;
   }
 }

@@ -1,4 +1,5 @@
 import projectService from "../services/projectService.js";
+import approvalService from "../services/approvalService.js";
 import { asyncHandler } from "../utils/responseHandler.js";
 
 class projectController {
@@ -11,6 +12,14 @@ class projectController {
       endTime,
       filePath,
       fileName
+    });
+    console.log(result);
+
+    // 新增审批单
+    await approvalService.addApproval({
+      userId: leaderId,
+      approvalType: 1,
+      projectId: result
     });
     return { msg: "新增项目成功", data: null };
   });
