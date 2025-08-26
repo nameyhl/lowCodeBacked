@@ -11,11 +11,11 @@ class projectService {
     fileName
   }) {
     if (endTime) {
-      endTime = new Date(endTime);
+      endTime = CommonUtils.formatDate(endTime);
     }
 
     const id = new Date().getTime();
-    const createTime = new Date();
+    const createTime = CommonUtils.formatDate();
     const status = 0;
     const code = CommonUtils.generateTimeBasedCode();
     await projectModel.addProject({
@@ -34,33 +34,62 @@ class projectService {
   }
 
   static async getProjectByCode(code) {
-    const result = await projectModel.getProjectByCode(code);
+    let result = await projectModel.getProjectByCode(code);
     if (result.length === 0) {
       throw new Error("项目不存在");
     }
-    const project = result[0];
+    const project = CommonUtils.formatDateInObject(result);
     return project;
   }
 
   static async getProjectList() {
-    const result = await projectModel.getProjectList();
+    let result = await projectModel.getProjectList();
+    result = CommonUtils.formatDateInObject(result);
     return result;
   }
 
   static async getProjectListByLeaderId(leaderId) {
-    const result = await projectModel.getProjectListByLeaderId(leaderId);
+    let result = await projectModel.getProjectListByLeaderId(leaderId);
 
     result.forEach(item => {
-      item.endTime = CommonUtils.formatDate(item.endTime);
-      item.createTime = CommonUtils.formatDate(item.createTime);
+      item = CommonUtils.formatDateInObject(item);
     });
 
     return result;
   }
 
   static async updateProjectStatus({ id, status }) {
-    const result = await projectModel.updateProjectStatus({ id, status });
+    let result = await projectModel.updateProjectStatus({ id, status });
+    result = CommonUtils.formatDateInObject(result);
     return result;
+  }
+
+  static async getProjectDetail({ id }) {
+    let [result] = await projectModel.getProjectDetail(id);
+    result = CommonUtils.formatDateInObject(result);
+    return result;
+  }
+
+  static async getProjectListByDepartmentLeader(id) {
+    let result = await projectModel.getProjectListByDepartmentLeader(id);
+    result = CommonUtils.formatDateInObject(result);
+    return result;
+  }
+
+  static async upDateProjectApprovalInfo({ id, stepNum, states, stepMsg }) {
+    stepNum++;
+    if (states === "pass") {
+      states = 1;
+    } else if (states === "reject") {
+      states = 2;
+    }
+    await projectModel.upDateProjectApprovalInfo({
+      id,
+      stepNum,
+      states,
+      stepMsg
+    });
+    return null;
   }
 }
 

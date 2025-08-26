@@ -58,7 +58,7 @@ class projectModel {
   // 通过leaderId获取项目列表
   static async getProjectListByLeaderId(leaderId) {
     const [result] = await pool.query(
-      `SELECT p.*, u.name AS leaderName FROM project AS p LEFT JOIN user AS u ON u.id = p.leaderId  WHERE leaderId = ?`,
+      `SELECT * FROM project_approval_info WHERE leaderId = ?`,
       [leaderId]
     );
     return result;
@@ -71,6 +71,31 @@ class projectModel {
       [status, id]
     );
     return result.affectedRows;
+  }
+
+  // 查询项目详情
+  static async getProjectDetail(id) {
+    const [result] = await pool.query(
+      `SELECT * FROM project_approval_info WHERE projectId = ?`,
+      [id]
+    );
+    return result;
+  }
+
+  // 根据部门id查询需要userid审核的项目
+  static async getProjectListByDepartmentLeader(id) {
+    const [result] = await pool.query(
+      `SELECT * FROM project_approval_info WHERE departmentLeader = ? AND stepNum = 1`,
+      [id]
+    );
+    return result;
+  }
+
+  // 第一步审批
+  static async upDateProjectApprovalInfo({ id, stepNum, states, stepMsg }) {
+    let sql = `UPDATE projectapproval SET stepNum = ${stepNum}, step1Msg = '${stepMsg}', step1Status = ${states} WHERE projectId = '${id}'`;
+    await pool.query(sql);
+    return null;
   }
 }
 

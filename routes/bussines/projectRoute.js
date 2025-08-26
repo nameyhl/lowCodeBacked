@@ -11,6 +11,15 @@ router.get(
   "/getProjectListByLeaderId",
   projectController.getProjectListByLeaderId
 );
+router.get("/getProjectDetail", projectController.getProjectDetail);
+router.get(
+  "/getProjectListByDepartmentLeader",
+  projectController.getProjectListByDepartmentLeader
+);
+router.put(
+  "/upDateProjectApprovalInfo",
+  projectController.upDateProjectApprovalInfo
+);
 
 // 创建项目
 

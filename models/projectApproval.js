@@ -12,6 +12,7 @@ import pool from "../configs/mysql.js";
  * @param approvalId 审批单编号
  */
 class projectApprovalModel {
+  // 新增project审批
   static addProjectApproval = async ({
     id,
     status,

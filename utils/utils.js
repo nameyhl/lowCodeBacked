@@ -54,5 +54,26 @@ class CommonUtils {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
+
+  // 格式化时间(只有年月日)
+  static formatDate(time = new Date()) {
+    const date4 = new Date(time);
+    const formatter = new Intl.DateTimeFormat("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+    return formatter.format(date4).replace(/\//g, "-");
+  }
+
+  // 遍历查询到的对象，将时间格式的数据全部格式化
+  static formatDateInObject(obj) {
+    for (const [key, value] of Object.entries(obj)) {
+      if (value instanceof Date) {
+        obj[key] = this.formatDate(value);
+      }
+    }
+    return obj;
+  }
 }
 export default CommonUtils;

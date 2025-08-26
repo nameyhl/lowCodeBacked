@@ -13,7 +13,6 @@ class projectController {
       filePath,
       fileName
     });
-    console.log(result);
 
     // 新增审批单
     await approvalService.addApproval({
@@ -26,7 +25,7 @@ class projectController {
 
   static getProjectByCode = asyncHandler(async (req, res) => {
     const { code } = req.query;
-    const result = await projectService.getProjectByCode(code);
+    const [result] = await projectService.getProjectByCode(code);
     return {
       msg: "获取项目成功",
       data: result
@@ -50,11 +49,43 @@ class projectController {
     };
   });
 
+  static getProjectListByDepartmentLeader = asyncHandler(async (req, res) => {
+    const { id } = req.query;
+    const result = await projectService.getProjectListByDepartmentLeader(id);
+    return {
+      msg: "获取项目列表成功",
+      data: result
+    };
+  });
+
   static updateProjectStatus = asyncHandler(async (req, res) => {
     const { id, status } = req.body;
     const result = await projectService.updateProjectStatus({ id, status });
     return {
       msg: "更新项目状态成功",
+      data: null
+    };
+  });
+
+  static getProjectDetail = asyncHandler(async (req, res) => {
+    const { id } = req.query;
+    const result = await projectService.getProjectDetail({ id });
+    return {
+      msg: "获取项目详情成功",
+      data: result
+    };
+  });
+
+  static upDateProjectApprovalInfo = asyncHandler(async (req, res) => {
+    const { id, stepNum, states, stepMsg } = req.body;
+    await projectService.upDateProjectApprovalInfo({
+      id,
+      stepNum,
+      states,
+      stepMsg
+    });
+    return {
+      msg: "更新项目审批信息成功",
       data: null
     };
   });
