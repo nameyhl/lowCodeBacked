@@ -77,18 +77,26 @@ class projectService {
   }
 
   static async upDateProjectApprovalInfo({ id, stepNum, states, stepMsg }) {
-    stepNum++;
     if (states === "pass") {
       states = 1;
     } else if (states === "reject") {
       states = 2;
     }
-    await projectModel.upDateProjectApprovalInfo({
-      id,
-      stepNum,
-      states,
-      stepMsg
-    });
+    if (stepNum === 1) {
+      await projectModel.upDateProjectApprovalInfo({
+        id,
+        stepNum : stepNum++,
+        states,
+        stepMsg
+      });
+    } else if (stepNum === 2) {
+      await projectModel.upDateProjectApprovalInfo2({
+        id,
+        stepNum : stepNum++,
+        states,
+        stepMsg
+      });
+    }
     return null;
   }
 }

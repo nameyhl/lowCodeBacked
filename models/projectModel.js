@@ -93,7 +93,13 @@ class projectModel {
 
   // 第一步审批
   static async upDateProjectApprovalInfo({ id, stepNum, states, stepMsg }) {
-    let sql = `UPDATE projectapproval SET stepNum = ${stepNum}, step1Msg = '${stepMsg}', step1Status = ${states} WHERE projectId = '${id}'`;
+    let sql;
+    if (stepNum == 2) {
+      sql = `UPDATE projectapproval SET stepNum = ${stepNum}, step1Msg = '${stepMsg}', step1Status = ${states} WHERE projectId = '${id}'`;
+    }
+    if (stepNum == 3) {
+      sql = `UPDATE projectapproval SET stepNum = ${stepNum}, step2Msg = '${stepMsg}', step2Status = ${states} WHERE projectId = '${id}'`;
+    }
     await pool.query(sql);
     return null;
   }
