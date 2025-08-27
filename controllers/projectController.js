@@ -49,9 +49,9 @@ class projectController {
     };
   });
 
-  static getProjectListByDepartmentLeader = asyncHandler(async (req, res) => {
-    const { id } = req.query;
-    const result = await projectService.getProjectListByDepartmentLeader(id);
+  static getProjectListByLeader = asyncHandler(async (req, res) => {
+    const { id, level } = req.query;
+    const result = await projectService.getProjectListByLeader({ id, level });
     return {
       msg: "获取项目列表成功",
       data: result

@@ -10,6 +10,7 @@ class approvalService {
       const result = await userModel.getFrimLeaderAndDepartmentLader(userId);
       const status = 2;
       const step = 1;
+      const step1Status = 3;
       let { frimLeader, departmentLeader } = result[0];
       projectApprovalModel.addProjectApproval({
         id,
@@ -18,7 +19,8 @@ class approvalService {
         projectId,
         departmentLeader,
         frimLeader,
-        createTime
+        createTime,
+        step1Status
       });
     } catch (error) {
       throw error;

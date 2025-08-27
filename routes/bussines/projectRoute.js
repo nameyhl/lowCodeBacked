@@ -12,10 +12,7 @@ router.get(
   projectController.getProjectListByLeaderId
 );
 router.get("/getProjectDetail", projectController.getProjectDetail);
-router.get(
-  "/getProjectListByDepartmentLeader",
-  projectController.getProjectListByDepartmentLeader
-);
+router.get("/getProjectListByLeader", projectController.getProjectListByLeader);
 router.put(
   "/upDateProjectApprovalInfo",
   projectController.upDateProjectApprovalInfo

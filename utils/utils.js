@@ -23,7 +23,7 @@ class CommonUtils {
   // 生成jwt令牌
   static generateToken(payload) {
     const secret = process.env.JWT_SECRET;
-    const token = jwt.sign(payload, secret, { expiresIn: "1h" });
+    const token = jwt.sign(payload, secret, { expiresIn: "7d" });
     return token;
   }
 
@@ -68,9 +68,19 @@ class CommonUtils {
 
   // 遍历查询到的对象，将时间格式的数据全部格式化
   static formatDateInObject(obj) {
-    for (const [key, value] of Object.entries(obj)) {
-      if (value instanceof Date) {
-        obj[key] = this.formatDate(value);
+    if (Array.isArray(obj)) {
+      obj.forEach(item => {
+        for (const [key, value] of Object.entries(item)) {
+          if (value instanceof Date) {
+            item[key] = this.formatDate(value);
+          }
+        }
+      });
+    } else if (typeof obj === "object") {
+      for (const [key, value] of Object.entries(obj)) {
+        if (value instanceof Date) {
+          obj[key] = this.formatDate(value);
+        }
       }
     }
     return obj;

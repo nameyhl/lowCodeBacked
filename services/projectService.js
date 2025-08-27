@@ -70,33 +70,30 @@ class projectService {
     return result;
   }
 
-  static async getProjectListByDepartmentLeader(id) {
-    let result = await projectModel.getProjectListByDepartmentLeader(id);
+  static async getProjectListByLeader({ id, level }) {
+    let result = await projectModel.getProjectListByLeader({ id, level });
     result = CommonUtils.formatDateInObject(result);
     return result;
   }
 
   static async upDateProjectApprovalInfo({ id, stepNum, states, stepMsg }) {
+    let step = stepNum;
     if (states === "pass") {
       states = 1;
+      step++;
     } else if (states === "reject") {
       states = 2;
     }
-    if (stepNum === 1) {
-      await projectModel.upDateProjectApprovalInfo({
-        id,
-        stepNum : stepNum++,
-        states,
-        stepMsg
-      });
-    } else if (stepNum === 2) {
-      await projectModel.upDateProjectApprovalInfo2({
-        id,
-        stepNum : stepNum++,
-        states,
-        stepMsg
-      });
-    }
+    let endTime = new Date();
+    endTime = CommonUtils.formatDate(endTime);
+    await projectModel.upDateProjectApprovalInfo({
+      id,
+      stepNum,
+      states,
+      stepMsg,
+      endTime,
+      step
+    });
     return null;
   }
 }

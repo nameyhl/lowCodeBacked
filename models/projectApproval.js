@@ -20,11 +20,12 @@ class projectApprovalModel {
     projectId,
     departmentLeader,
     frimLeader,
-    createTime
+    createTime,
+    step1Status
   }) => {
     let sql = `
-      insert into projectapproval (id, status, step, projectId, departmentLeader, frimLeader, createTime)
-      values (?, ?, ?, ?, ?, ?, ?)
+      insert into projectapproval (id, status, stepNum, projectId, departmentLeader, frimLeader, createTime, step1Status)
+      values (?, ?, ?, ?, ?, ?, ?, ?)
     `;
     try {
       const [projectApproval] = await pool.query(sql, [
@@ -34,7 +35,8 @@ class projectApprovalModel {
         projectId,
         departmentLeader,
         frimLeader,
-        createTime
+        createTime,
+        step1Status
       ]);
       return projectApproval;
     } catch (error) {
