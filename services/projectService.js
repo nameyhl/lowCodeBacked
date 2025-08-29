@@ -96,6 +96,19 @@ class projectService {
     });
     return null;
   }
+
+  static async getProjectByLevel({ id, level }) {
+    let result = [];
+    if (level == "department") {
+      let departmentResult = await projectModel.getProjectListByDepartment(id);
+      result = CommonUtils.formatDateInObject(departmentResult);
+    }
+    if (level == "frim") {
+      let frimResult = await projectModel.getProjectListByFrim(id);
+      result = CommonUtils.formatDateInObject(frimResult);
+    }
+    return result;
+  }
 }
 
 export default projectService;

@@ -129,6 +129,24 @@ class projectModel {
 
     return null;
   }
+
+  // 更具departmentLeader查询项目
+  static async getProjectListByDepartment(id) {
+    const [result] = await pool.query(
+      `SELECT * FROM projectInfo WHERE departmentLeader = ?`,
+      [id]
+    );
+    return result;
+  }
+
+  // 根据frimLeader查询项目
+  static async getProjectListByFrim(id) {
+    const [result] = await pool.query(
+      `SELECT * FROM projectInfo WHERE frimLeader = ?`,
+      [id]
+    );
+    return result;
+  }
 }
 
 export default projectModel;

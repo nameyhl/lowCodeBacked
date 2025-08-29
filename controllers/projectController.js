@@ -89,6 +89,16 @@ class projectController {
       data: null
     };
   });
+
+  static getProjectByLevel = asyncHandler(async (req, res) => {
+    const { id, level } = req.query;
+    console.log(id, level);
+    const result = await projectService.getProjectByLevel({ id, level });
+    return {
+      msg: "获取项目列表成功",
+      data: result
+    };
+  });
 }
 
 export default projectController;
