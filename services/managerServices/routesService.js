@@ -1,7 +1,7 @@
 // 引入model层
-import routesModel from "../models/routesModel.js";
+import routesModel from "../../models/managerModels/routesModel.js";
 // 引入通用方法
-import CommonUtils from "../utils/utils.js";
+import CommonUtils from "../../utils/utils.js";
 
 class routesService {
   // 获取所有路由

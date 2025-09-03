@@ -1,4 +1,4 @@
-import pool from "../configs/mysql.js";
+import pool from "../../configs/mysql.js";
 
 class positionModel {
   // 新增职位

@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import departmentController from "../../controllers/departmentController.js";
+import departmentController from "../../controllers/managerControllers/departmentController.js";
 
 router.post("/addDepartment", departmentController.addDepartment);
 router.get("/getDepartment", departmentController.getDepartment);

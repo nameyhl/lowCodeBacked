@@ -1,5 +1,5 @@
-import positionService from "../services/positionService.js";
-import { asyncHandler } from "../utils/responseHandler.js";
+import positionService from "../../services/managerServices/positionService.js";
+import { asyncHandler } from "../../utils/responseHandler.js";
 
 class positionController {
   static addPosition = asyncHandler(async (req, res) => {

@@ -1,7 +1,7 @@
 // 引入service层级
-import routesService from "../services/routesService.js";
+import routesService from "../../services/managerServices/routesService.js";
 // 引入相应的工具类
-import { asyncHandler } from "../utils/responseHandler.js";
+import { asyncHandler } from "../../utils/responseHandler.js";
 
 class routesController {
   // 获取所有路由

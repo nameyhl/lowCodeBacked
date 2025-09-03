@@ -1,6 +1,6 @@
-import userModel from "../models/userModel.js";
+import userModel from "../../models/managerModels/userModel.js";
 import { v4 as uuidv4 } from "uuid";
-import CommonUtils from "../utils/utils.js";
+import CommonUtils from "../../utils/utils.js";
 
 class userService {
   // 新增用户
@@ -16,7 +16,7 @@ class userService {
     positionId,
     password,
     frimId,
-    isEmp,
+    isEmp
   }) {
     // 使用uuid生成唯一id
     let id = uuidv4();
@@ -42,7 +42,7 @@ class userService {
       password,
       positionId,
       frimId,
-      isEmp,
+      isEmp
     });
     return result;
   }
@@ -62,7 +62,10 @@ class userService {
       throw error;
     }
     // 生成token
-    const token = CommonUtils.generateToken({ userId: user[0].id, username: user[0].username });
+    const token = CommonUtils.generateToken({
+      userId: user[0].id,
+      username: user[0].username
+    });
     return { ...user[0], token };
   }
   // 获取用户
@@ -74,7 +77,7 @@ class userService {
       size,
       username,
       name,
-      departmentId,
+      departmentId
     });
     return user;
   }
@@ -91,7 +94,7 @@ class userService {
     departmentId,
     phone,
     positionId,
-    frimId,
+    frimId
   }) {
     birth = new Date(birth);
     // 查询frimId
@@ -106,7 +109,7 @@ class userService {
       departmentId,
       phone,
       positionId,
-      frimId,
+      frimId
     });
     return user;
   }
@@ -127,7 +130,7 @@ class userService {
     const user = await userModel.getAllUser({
       frimId,
       departmentId,
-      positionId,
+      positionId
     });
     return user;
   }
@@ -139,7 +142,7 @@ class userService {
       size,
       username,
       name,
-      departmentId,
+      departmentId
     });
     return user;
   }

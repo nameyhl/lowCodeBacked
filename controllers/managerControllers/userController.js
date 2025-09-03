@@ -1,5 +1,5 @@
-import userService from "../services/userService.js";
-import { asyncHandler } from "../utils/responseHandler.js";
+import userService from "../../services/managerServices/userService.js";
+import { asyncHandler } from "../../utils/responseHandler.js";
 
 class userController {
   // 新增用户

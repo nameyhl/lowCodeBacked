@@ -1,5 +1,5 @@
-import projectModel from "../models/projectModel.js";
-import CommonUtils from "../utils/utils.js";
+import projectModel from "../../models/businessModels/projectModel.js";
+import CommonUtils from "../../utils/utils.js";
 
 class projectService {
   static async addProject({

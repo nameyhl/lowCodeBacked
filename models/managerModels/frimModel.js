@@ -1,4 +1,4 @@
-import pool from "../configs/mysql.js";
+import pool from "../../configs/mysql.js";
 
 class frimModel {
   // 新增分公司
@@ -31,7 +31,7 @@ class frimModel {
       const [total] = await pool.query(selectTotleSql);
       return {
         data: frims,
-        total: total[0].total,
+        total: total[0].total
       };
     } catch (error) {
       throw error;
@@ -77,7 +77,7 @@ class frimModel {
         name,
         leaderId,
         msg,
-        id,
+        id
       ]);
       return frim;
     } catch (error) {

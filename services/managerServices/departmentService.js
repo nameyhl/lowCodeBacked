@@ -1,5 +1,5 @@
-import departmentModel from "../models/departmentModel.js";
-import positionModel from "../models/positionModel.js";
+import departmentModel from "../../models/managerModels/departmentModel.js";
+import positionModel from "../../models/managerModels/positionmodel.js";
 
 class departmentService {
   // 新增部门
@@ -20,13 +20,13 @@ class departmentService {
         name,
         frimId,
         page,
-        size,
+        size
       });
       return department;
     } else {
       const department = await departmentModel.getAllDepartment({
         name,
-        frimId,
+        frimId
       });
       return department;
     }
@@ -39,7 +39,7 @@ class departmentService {
       name,
       frimId,
       leaderId,
-      msg,
+      msg
     });
     return department;
   }

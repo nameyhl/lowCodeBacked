@@ -1,5 +1,5 @@
-import frimService from "../services/frimService.js";
-import { asyncHandler } from "../utils/responseHandler.js";
+import frimService from "../../services/managerServices/frimService.js";
+import { asyncHandler } from "../../utils/responseHandler.js";
 
 class frimController {
   // 新增分公司

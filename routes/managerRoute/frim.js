@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import frimController from "../../controllers/frimController.js";
+import frimController from "../../controllers/managerControllers/frimController.js";
 
 router.post("/addFrim", frimController.addFrim);
 router.get("/getFrims", frimController.getFrims);

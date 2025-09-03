@@ -1,5 +1,5 @@
-import projectApprovalModel from "../models/projectApproval.js";
-import userModel from "../models/userModel.js";
+import projectApprovalModel from "../../models/businessModels/projectApproval.js";
+import userModel from "../../models/managerModels/userModel.js";
 
 class approvalService {
   // 新增审批单

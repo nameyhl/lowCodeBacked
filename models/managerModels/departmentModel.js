@@ -1,4 +1,4 @@
-import pool from "../configs/mysql.js";
+import pool from "../../configs/mysql.js";
 
 class departmentModel {
   // 新增部门
@@ -13,7 +13,7 @@ class departmentModel {
         name,
         frimId,
         leaderId,
-        msg,
+        msg
       ]);
       return department;
     } catch (error) {
@@ -48,12 +48,12 @@ class departmentModel {
       selectDepartmentSqlWithLimit += ` LIMIT ? OFFSET ?`;
       const [departments] = await pool.query(selectDepartmentSqlWithLimit, [
         size,
-        page,
+        page
       ]);
       const [total] = await pool.query(selectTotleSql);
       return {
         data: departments,
-        total: total[0].total,
+        total: total[0].total
       };
     } catch (error) {
       throw error;
@@ -94,7 +94,7 @@ class departmentModel {
         frimId,
         leaderId,
         msg,
-        id,
+        id
       ]);
       return department;
     } catch (error) {

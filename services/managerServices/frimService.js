@@ -1,5 +1,5 @@
-import frimModel from "../models/frimModel.js";
-import departmentModel from "../models/departmentModel.js";
+import frimModel from "../../models/managerModels/frimModel.js";
+import departmentModel from "../../models/managerModels/departmentModel.js";
 
 class frimService {
   // 新增分公司

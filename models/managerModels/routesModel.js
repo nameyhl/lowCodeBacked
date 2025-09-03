@@ -1,4 +1,4 @@
-import pool from "../configs/mysql.js";
+import pool from "../../configs/mysql.js";
 
 class routesModels {
   // 获取所有路由
@@ -8,13 +8,17 @@ class routesModels {
   }
 
   static async getRoutes({ name }) {
-    const [routes] = await pool.query("SELECT * FROM routes WHERE name = ?", [name]);
+    const [routes] = await pool.query("SELECT * FROM routes WHERE name = ?", [
+      name
+    ]);
     return routes;
   }
 
   // 查询父id为空的路由
   static async getRoutesWhereParentIdNull() {
-    const [routes] = await pool.query("SELECT * FROM routes WHERE parentId = ''");
+    const [routes] = await pool.query(
+      "SELECT * FROM routes WHERE parentId = ''"
+    );
     return routes;
   }
 
@@ -30,7 +34,7 @@ class routesModels {
   // 批量删除路由
   static async deleteRoutes(ids) {
     const [result] = await pool.query("DELETE FROM routes WHERE id IN (?)", [
-      ids,
+      ids
     ]);
     return result.affectedRows;
   }
@@ -53,7 +57,7 @@ class routesModels {
   // 根据路由路径查询路由
   static async getRouteByRouter(path) {
     const [route] = await pool.query("SELECT * FROM routes WHERE router = ?", [
-      path,
+      path
     ]);
     return route;
   }
@@ -66,7 +70,7 @@ class routesModels {
     view,
     level,
     parentId,
-    isShow,
+    isShow
   }) {
     const [result] = await pool.query(
       "UPDATE routes SET name = ?, router = ?, view = ?, level = ?, parentId = ?, isShow = ? WHERE id = ?",
@@ -83,7 +87,7 @@ class routesModels {
     view,
     level,
     parentId,
-    isShow,
+    isShow
   }) {
     let params = [];
     let sql = "SELECT * FROM routes WHERE 1 = 1";

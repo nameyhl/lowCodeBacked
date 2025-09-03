@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import positionController from "../../controllers/positionController.js";
+import positionController from "../../controllers/managerControllers/positionController.js";
 
 router.post("/addPosition", positionController.addPosition);
 router.get("/getPositionList", positionController.getPosition);

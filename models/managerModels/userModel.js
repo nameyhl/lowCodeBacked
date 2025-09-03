@@ -1,4 +1,4 @@
-import pool from "../configs/mysql.js";
+import pool from "../../configs/mysql.js";
 class userModel {
   // 新增用户
   static async addUser(obj) {

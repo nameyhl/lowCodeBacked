@@ -1,5 +1,5 @@
-import departmentService from "../services/departmentService.js";
-import { asyncHandler } from "../utils/responseHandler.js";
+import departmentService from "../../services/managerServices/departmentService.js";
+import { asyncHandler } from "../../utils/responseHandler.js";
 
 class departmentController {
   // 新增部门

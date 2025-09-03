@@ -1,5 +1,5 @@
-import positionModel from "../models/positionModel.js";
-import userModel from "../models/userModel.js";
+import positionModel from "../../models/managerModels/positionmodel.js";
+import userModel from "../../models/managerModels/userModel.js";
 
 class positionService {
   static async addPosition({ name, departmentId, msg, frimId }) {
@@ -10,7 +10,7 @@ class positionService {
       name,
       departmentId,
       msg,
-      frimId,
+      frimId
     });
     return result;
   }
@@ -23,7 +23,7 @@ class positionService {
         departmentId,
         name,
         page,
-        size,
+        size
       });
       return result;
     } else {
@@ -48,7 +48,7 @@ class positionService {
       id,
       name,
       leaderId,
-      msg,
+      msg
     });
     return result;
   }

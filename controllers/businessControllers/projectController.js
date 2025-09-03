@@ -1,6 +1,6 @@
-import projectService from "../services/projectService.js";
-import approvalService from "../services/approvalService.js";
-import { asyncHandler } from "../utils/responseHandler.js";
+import projectService from "../../services/businessServices/projectService.js";
+import approvalService from "../../services/businessServices/approvalService.js";
+import { asyncHandler } from "../../utils/responseHandler.js";
 
 class projectController {
   static addProject = asyncHandler(async (req, res) => {
