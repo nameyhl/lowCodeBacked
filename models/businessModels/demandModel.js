@@ -1,0 +1,43 @@
+import pool from "../../configs/mysql.js";
+
+/**
+ * 需求模型
+ * @param {*} name 需求名称
+ * @param {*} projectId 项目id
+ * @param {*} msg 需求描述
+ * @param {*} endTime 需求结束时间
+ */
+
+class demandModel {
+  static async getDemandList(id) {
+    let sql = `SELECT * FROM demand WHERE projectId = ? ORDER BY createTime asc`;
+    let [result] = await pool.query(sql, [id]);
+    return result;
+  }
+
+  static async addDemand({ name, projectId, design, endTime, createTime }) {
+    let sql = `INSERT INTO demand (name, projectId, design, endTime, createTime) VALUES (?, ?, ?, ?, ?)`;
+    let [result] = await pool.query(sql, [
+      name,
+      projectId,
+      design,
+      endTime,
+      createTime
+    ]);
+    return result;
+  }
+
+  static async updateDemand({ id, name, design, endTime, updateTime, status }) {
+    let sql = `UPDATE demand SET name = ?, design = ?, endTime = ?, updateTime = ?, status = ? WHERE id = ?`;
+    let [result] = await pool.query(sql, [
+      name,
+      design,
+      endTime,
+      updateTime,
+      status,
+      id
+    ]);
+    return result;
+  }
+}
+export default demandModel;

@@ -94,6 +94,9 @@ class projectService {
       endTime,
       step
     });
+    if (stepNum == 2 && states == 1) {
+      await projectModel.updateProjectStatus({ id, status: 1 });
+    }
     return null;
   }
 
@@ -107,6 +110,12 @@ class projectService {
       let frimResult = await projectModel.getProjectListByFrim(id);
       result = CommonUtils.formatDateInObject(frimResult);
     }
+    return result;
+  }
+
+  static async updateProjectStatus({ id, status }) {
+    let result = await projectModel.updateProjectStatus({ id, status });
+    result = CommonUtils.formatDateInObject(result);
     return result;
   }
 }

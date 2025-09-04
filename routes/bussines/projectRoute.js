@@ -18,6 +18,7 @@ router.put(
   projectController.upDateProjectApprovalInfo
 );
 router.get("/getProjectByLevel", projectController.getProjectByLevel);
+router.put("/updateProjectStatus", projectController.updateProjectStatus);
 
 // 创建项目
 

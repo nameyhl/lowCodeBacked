@@ -99,6 +99,15 @@ class projectController {
       data: result
     };
   });
+
+  static updateProjectStatus = asyncHandler(async (req, res) => {
+    const { id, status } = req.body;
+    await projectService.updateProjectStatus({ id, status });
+    return {
+      msg: "更新项目状态成功",
+      data: null
+    };
+  });
 }
 
 export default projectController;

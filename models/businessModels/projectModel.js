@@ -105,12 +105,10 @@ class projectModel {
     step
   }) {
     let sql;
-    let sql2;
-    console.log(stepNum);
     if (stepNum == 1) {
-      sql = `UPDATE projectapproval SET stepNum = ${step}, step1Msg = '${stepMsg}', step1Status = ${states}, step1EndTime = '${endTime}', step2Status = 3
+      sql = `UPDATE projectapproval SET 
+      stepNum = ${step}, step1Msg = '${stepMsg}', step1Status = ${states}, step1EndTime = '${endTime}', step2Status = 3
        WHERE projectId = '${id}'`;
-      await pool.query(sql);
     }
 
     if (stepNum == 2) {
@@ -121,11 +119,8 @@ class projectModel {
         WHERE projectId = '${id}'
          AND step1Status = 1
       `;
-      sql2 = `
-        UPDATE project SET status = 1 WHERE id = '${id}'
-        `;
-      Promise.all([await pool.query(sql), await pool.query(sql2)]);
     }
+    await pool.query(sql);
 
     return null;
   }
@@ -144,6 +139,15 @@ class projectModel {
     const [result] = await pool.query(
       `SELECT * FROM projectInfo WHERE frimLeader = ?`,
       [id]
+    );
+    return result;
+  }
+
+  // 修改项目status
+  static async updateProjectStatus({ id, status }) {
+    const [result] = await pool.query(
+      `UPDATE project SET status = ? WHERE id = ?`,
+      [status, id]
     );
     return result;
   }
