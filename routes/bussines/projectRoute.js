@@ -11,6 +11,7 @@ router.get(
   "/getProjectListByLeaderId",
   projectController.getProjectListByLeaderId
 );
+router.get("/getProjectById", projectController.getProjectById);
 router.get("/getProjectDetail", projectController.getProjectDetail);
 router.get("/getProjectListByLeader", projectController.getProjectListByLeader);
 router.put(
@@ -19,6 +20,7 @@ router.put(
 );
 router.get("/getProjectByLevel", projectController.getProjectByLevel);
 router.put("/updateProjectStatus", projectController.updateProjectStatus);
+router.delete("/deleteProject", projectController.deleteProject);
 
 // 创建项目
 

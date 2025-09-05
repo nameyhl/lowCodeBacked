@@ -1,5 +1,6 @@
 import projectService from "../../services/businessServices/projectService.js";
 import approvalService from "../../services/businessServices/approvalService.js";
+import demandService from "../../services/businessServices/demandService.js";
 import { asyncHandler } from "../../utils/responseHandler.js";
 
 class projectController {
@@ -23,9 +24,32 @@ class projectController {
     return { msg: "新增项目成功", data: null };
   });
 
+  static deleteProject = asyncHandler(async (req, res) => {
+    const { id } = req.query;
+    let delete1 = await demandService.deleteDemandByProjectId({ id });
+    let delete2 = await approvalService.deleteApprovalByProjectId({ id });
+    let delete3 = await projectService.deleteProject({ id });
+    await Promise.all([delete1, delete2, delete3]);
+    return {
+      msg: "删除项目成功",
+      data: null
+    };
+  });
+
   static getProjectByCode = asyncHandler(async (req, res) => {
     const { code } = req.query;
     const [result] = await projectService.getProjectByCode(code);
+    return {
+      msg: "获取项目成功",
+      data: result
+    };
+  });
+
+  static getProjectById = asyncHandler(async (req, res) => {
+    console.log(req.query);
+
+    const { id } = req.query;
+    const result = await projectService.getProjectById({ id });
     return {
       msg: "获取项目成功",
       data: result
@@ -78,7 +102,7 @@ class projectController {
 
   static upDateProjectApprovalInfo = asyncHandler(async (req, res) => {
     const { id, stepNum, states, stepMsg } = req.body;
-    await projectService.upDateProjectApprovalInfo({
+    let result = await projectService.upDateProjectApprovalInfo({
       id,
       stepNum,
       states,
@@ -86,7 +110,7 @@ class projectController {
     });
     return {
       msg: "更新项目审批信息成功",
-      data: null
+      data: result
     };
   });
 

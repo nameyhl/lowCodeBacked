@@ -26,6 +26,15 @@ class approvalService {
       throw error;
     }
   }
+
+  // 删除审批单
+  static async deleteApprovalByProjectId({ id }) {
+    try {
+      await projectApprovalModel.deleteApprovalByProjectId({ id });
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default approvalService;

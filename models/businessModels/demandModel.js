@@ -15,6 +15,12 @@ class demandModel {
     return result;
   }
 
+  static async deleteDemandByProjectId({ id }) {
+    let sql = `DELETE FROM demand WHERE projectId = ?`;
+    let [result] = await pool.query(sql, [id]);
+    return result;
+  }
+
   static async addDemand({ name, projectId, design, endTime, createTime }) {
     let sql = `INSERT INTO demand (name, projectId, design, endTime, createTime) VALUES (?, ?, ?, ?, ?)`;
     let [result] = await pool.query(sql, [

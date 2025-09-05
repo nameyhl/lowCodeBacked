@@ -8,6 +8,7 @@ import pool from "../../configs/mysql.js";
  */
 
 class projectModel {
+  // 新增项目
   static async addProject({
     id,
     code,
@@ -38,11 +39,24 @@ class projectModel {
     return result.affectedRows;
   }
 
+  // 删除项目
+  static async deleteProject({ id }) {
+    const [result] = await pool.query(`DELETE FROM project WHERE id = ?`, [id]);
+    return result;
+  }
   // 通过code获取项目
   static async getProjectByCode(code) {
     const [result] = await pool.query(
       `SELECT p.*, u.name AS leaderName FROM project As p WHERE p.code = ? LEFT JOIN user AS u ON u.id = p.leaderId`,
       [code]
+    );
+    return result;
+  }
+
+  static async getProjectById({ id }) {
+    const [result] = await pool.query(
+      `SELECT p.*, u.name AS leaderName FROM project As p  LEFT JOIN user AS u ON u.id = p.leaderId WHERE p.id = ?`,
+      [id]
     );
     return result;
   }
@@ -70,7 +84,7 @@ class projectModel {
       `UPDATE project SET status = ? WHERE id = ?`,
       [status, id]
     );
-    return result.affectedRows;
+    return "changeStatus";
   }
 
   // 查询项目详情
@@ -139,15 +153,6 @@ class projectModel {
     const [result] = await pool.query(
       `SELECT * FROM projectInfo WHERE frimLeader = ?`,
       [id]
-    );
-    return result;
-  }
-
-  // 修改项目status
-  static async updateProjectStatus({ id, status }) {
-    const [result] = await pool.query(
-      `UPDATE project SET status = ? WHERE id = ?`,
-      [status, id]
     );
     return result;
   }

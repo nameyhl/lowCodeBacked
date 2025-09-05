@@ -33,11 +33,21 @@ class projectService {
     return id;
   }
 
+  static async deleteProject({ id }) {
+    await projectModel.deleteProject({ id });
+  }
+
   static async getProjectByCode(code) {
     let result = await projectModel.getProjectByCode(code);
     if (result.length === 0) {
       throw new Error("项目不存在");
     }
+    const project = CommonUtils.formatDateInObject(result);
+    return project;
+  }
+
+  static async getProjectById({ id }) {
+    let result = await projectModel.getProjectById({ id });
     const project = CommonUtils.formatDateInObject(result);
     return project;
   }
@@ -94,10 +104,11 @@ class projectService {
       endTime,
       step
     });
+    let res = null;
     if (stepNum == 2 && states == 1) {
-      await projectModel.updateProjectStatus({ id, status: 1 });
+      res = await projectModel.updateProjectStatus({ id, status: 1 });
     }
-    return null;
+    return res;
   }
 
   static async getProjectByLevel({ id, level }) {

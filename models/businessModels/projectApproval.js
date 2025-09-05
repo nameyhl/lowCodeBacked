@@ -43,6 +43,19 @@ class projectApprovalModel {
       throw error;
     }
   };
+
+  // 删除审批单
+  static deleteApprovalByProjectId = async ({ id }) => {
+    let sql = `
+      delete from projectapproval where projectId = ?
+    `;
+    try {
+      const [projectApproval] = await pool.query(sql, [id]);
+      return projectApproval;
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
 export default projectApprovalModel;

@@ -6,6 +6,10 @@ const router = express.Router();
 
 router.post("/addDemand", demandController.addDemand);
 router.get("/getDemandList", demandController.getDemandList);
+router.get(
+  "/getDemandListGroupByStatus",
+  demandController.getDemandListGroupByStatus
+);
 router.put("/updateDemand", demandController.updateDemand);
 
 export default router;

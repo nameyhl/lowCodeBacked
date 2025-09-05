@@ -1,11 +1,41 @@
 import demandModel from "../../models/businessModels/demandModel.js";
 import CommonUtils from "../../utils/utils.js";
 
+// 按照status区分需求
+function getDemandListByStatus(reslut) {
+  let aws = {};
+  let statusList = [
+    "close",
+    "undeveloped",
+    "developing",
+    "reject",
+    "noTest",
+    "testing",
+    "nopass",
+    "pass"
+  ];
+
+  statusList.forEach((item, index) => {
+    aws[item] = reslut.filter(i => i.status === index);
+  });
+  return aws;
+}
+
 class demandService {
   static async getDemandList(id) {
     let result = await demandModel.getDemandList(id);
     result = CommonUtils.formatDateInObject(result);
     return result;
+  }
+
+  static async getDemandListGroupByStatus(id) {
+    let result = await demandModel.getDemandList(id);
+    result = CommonUtils.formatDateInObject(result);
+    return getDemandListByStatus(result);
+  }
+  static async deleteDemandByProjectId({ id }) {
+    await demandModel.deleteDemandByProjectId({ id });
+    return;
   }
 
   static async addDemand({ name, projectId, design, endTime }) {
