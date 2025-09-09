@@ -129,6 +129,35 @@ class projectService {
     result = CommonUtils.formatDateInObject(result);
     return result;
   }
+
+  static async updateProjectAdress({
+    id,
+    designAddress,
+    frontCodeAddress,
+    backCodeAddress
+  }) {
+    let promiseList = [];
+    if (designAddress) {
+      promiseList.push(
+        projectModel.updateProjectDesignAddress({ id, designAddress })
+      );
+    }
+    if (frontCodeAddress) {
+      promiseList.push(
+        projectModel.updateProjectFrontCodeAddress({ id, frontCodeAddress })
+      );
+    }
+    if (backCodeAddress) {
+      promiseList.push(
+        projectModel.updateProjectBackCodeAddress({ id, backCodeAddress })
+      );
+    }
+    await Promise.all(promiseList);
+    return {
+      data: null,
+      msg: "修改成功"
+    };
+  }
 }
 
 export default projectService;

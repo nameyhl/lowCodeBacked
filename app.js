@@ -23,6 +23,11 @@ app.use("/manager", managerRouter);
 app.use("/business", businessRouter);
 app.use("/file", fileRouter);
 
+// 添加根路由处理
+app.get("/", (req, res) => {
+  res.sendFile("C:/Users/yyy/Desktop/11/lowCode/lowCodeBacked/index.html");
+});
+
 app.listen(PORT, () => {
   console.log(`服务运行在: http://localhost:${PORT} `);
 });

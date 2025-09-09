@@ -156,6 +156,29 @@ class projectModel {
     );
     return result;
   }
+
+  // 修改projectAddress
+  static async updateProjectDesignAddress({ id, designAddress }) {
+    const [result] = await pool.query(
+      `UPDATE project SET designAddress = ? WHERE id = ?`,
+      [designAddress, id]
+    );
+    return result;
+  }
+  static async updateProjectFrontCodeAddress({ id, frontCodeAddress }) {
+    const [result] = await pool.query(
+      `UPDATE project SET frontCodeAddress = ? WHERE id = ?`,
+      [frontCodeAddress, id]
+    );
+    return result;
+  }
+  static async updateProjectBackCodeAddress({ id, backCodeAddress }) {
+    const [result] = await pool.query(
+      `UPDATE project SET backCodeAddress = ? WHERE id = ?`,
+      [backCodeAddress, id]
+    );
+    return result;
+  }
 }
 
 export default projectModel;

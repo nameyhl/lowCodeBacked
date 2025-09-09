@@ -21,6 +21,7 @@ router.put(
 router.get("/getProjectByLevel", projectController.getProjectByLevel);
 router.put("/updateProjectStatus", projectController.updateProjectStatus);
 router.delete("/deleteProject", projectController.deleteProject);
+router.put("/updateProjectAdress", projectController.updateProjectAdress);
 
 // 创建项目
 

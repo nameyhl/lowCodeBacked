@@ -46,13 +46,11 @@ class projectController {
   });
 
   static getProjectById = asyncHandler(async (req, res) => {
-    console.log(req.query);
-
     const { id } = req.query;
     const result = await projectService.getProjectById({ id });
     return {
       msg: "获取项目成功",
-      data: result
+      data: result[0]
     };
   });
 
@@ -129,6 +127,20 @@ class projectController {
     await projectService.updateProjectStatus({ id, status });
     return {
       msg: "更新项目状态成功",
+      data: null
+    };
+  });
+
+  static updateProjectAdress = asyncHandler(async (req, res) => {
+    const { id, designAddress, frontCodeAddress, backCodeAddress } = req.body;
+    await projectService.updateProjectAdress({
+      id,
+      designAddress,
+      frontCodeAddress,
+      backCodeAddress
+    });
+    return {
+      msg: "更新项目地址成功",
       data: null
     };
   });

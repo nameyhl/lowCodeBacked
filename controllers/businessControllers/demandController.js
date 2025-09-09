@@ -11,16 +11,6 @@ class demandController {
     };
   });
 
-  static getDemandListGroupByStatus = asyncHandler(async (req, res) => {
-    const { id } = req.query;
-    console.log(id);
-    const result = await demandService.getDemandListGroupByStatus(id);
-    return {
-      msg: "获取需求列表成功",
-      data: result
-    };
-  });
-
   static addDemand = asyncHandler(async (req, res) => {
     const { name, projectId, design, endTime } = req.body;
     const result = await demandService.addDemand({
@@ -46,6 +36,15 @@ class demandController {
     });
     return {
       msg: "更新需求成功",
+      data: null
+    };
+  });
+
+  static updateDemandStatus = asyncHandler(async (req, res) => {
+    const { id, status, rejectMsg } = req.body;
+    await demandService.updateDemandStatus({ id, status, rejectMsg });
+    return {
+      msg: "更新需求状态成功",
       data: null
     };
   });

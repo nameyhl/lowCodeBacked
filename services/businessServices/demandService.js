@@ -1,26 +1,6 @@
 import demandModel from "../../models/businessModels/demandModel.js";
 import CommonUtils from "../../utils/utils.js";
 
-// 按照status区分需求
-function getDemandListByStatus(reslut) {
-  let aws = {};
-  let statusList = [
-    "close",
-    "undeveloped",
-    "developing",
-    "reject",
-    "noTest",
-    "testing",
-    "nopass",
-    "pass"
-  ];
-
-  statusList.forEach((item, index) => {
-    aws[item] = reslut.filter(i => i.status === index);
-  });
-  return aws;
-}
-
 class demandService {
   static async getDemandList(id) {
     let result = await demandModel.getDemandList(id);
@@ -28,11 +8,6 @@ class demandService {
     return result;
   }
 
-  static async getDemandListGroupByStatus(id) {
-    let result = await demandModel.getDemandList(id);
-    result = CommonUtils.formatDateInObject(result);
-    return getDemandListByStatus(result);
-  }
   static async deleteDemandByProjectId({ id }) {
     await demandModel.deleteDemandByProjectId({ id });
     return;
@@ -62,6 +37,22 @@ class demandService {
       updateTime,
       status
     });
+    return result;
+  }
+
+  static async updateDemandStatus({ id, status, rejectMsg }) {
+    let result;
+    console.log(rejectMsg);
+
+    if (status === 3 || status === 6) {
+      result = await demandModel.updateDemandStatusByReject({
+        id,
+        status,
+        rejectMsg
+      });
+    } else {
+      result = await demandModel.updateDemandStatus({ id, status });
+    }
     return result;
   }
 }
