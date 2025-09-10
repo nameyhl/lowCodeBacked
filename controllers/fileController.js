@@ -16,19 +16,17 @@ class fileController {
   static uploadFile = asyncHandler(async (req, res) => {
     try {
       const file = req.file;
-      console.log(file);
 
       if (!file) {
         throw new Error("文件上传失败");
       }
 
       // 返回文件地址
-      const fileUrl = `http://localhost:3000/uploads/${file.filename}`;
       return {
         msg: "文件上传成功",
         data: {
           fileName: Buffer.from(file.originalname, "latin1").toString("utf8"),
-          fileUrl
+          fileUrl: file.filename
         }
       };
     } catch (err) {

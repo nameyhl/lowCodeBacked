@@ -80,15 +80,6 @@ class projectController {
     };
   });
 
-  static updateProjectStatus = asyncHandler(async (req, res) => {
-    const { id, status } = req.body;
-    const result = await projectService.updateProjectStatus({ id, status });
-    return {
-      msg: "更新项目状态成功",
-      data: null
-    };
-  });
-
   static getProjectDetail = asyncHandler(async (req, res) => {
     const { id } = req.query;
     const result = await projectService.getProjectDetail({ id });
@@ -123,8 +114,13 @@ class projectController {
   });
 
   static updateProjectStatus = asyncHandler(async (req, res) => {
-    const { id, status } = req.body;
-    await projectService.updateProjectStatus({ id, status });
+    const { id, status, fileName, filePath } = req.body;
+    await projectService.updateProjectStatus({
+      id,
+      status,
+      fileName,
+      filePath
+    });
     return {
       msg: "更新项目状态成功",
       data: null
@@ -142,6 +138,15 @@ class projectController {
     return {
       msg: "更新项目地址成功",
       data: null
+    };
+  });
+
+  static getFile = asyncHandler(async (req, res) => {
+    const { id } = req.query;
+    let result = await projectService.getFile({ id });
+    return {
+      msg: "获取文件成功",
+      data: result
     };
   });
 }

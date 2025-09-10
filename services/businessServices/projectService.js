@@ -68,12 +68,6 @@ class projectService {
     return result;
   }
 
-  static async updateProjectStatus({ id, status }) {
-    let result = await projectModel.updateProjectStatus({ id, status });
-    result = CommonUtils.formatDateInObject(result);
-    return result;
-  }
-
   static async getProjectDetail({ id }) {
     let [result] = await projectModel.getProjectDetail(id);
     result = CommonUtils.formatDateInObject(result);
@@ -124,8 +118,27 @@ class projectService {
     return result;
   }
 
-  static async updateProjectStatus({ id, status }) {
-    let result = await projectModel.updateProjectStatus({ id, status });
+  static async updateProjectStatus({ id, status, fileName, filePath }) {
+    let result = await projectModel.updateProjectStatus({
+      id,
+      status,
+      fileName,
+      filePath
+    });
+    if (status == 2) {
+      await projectModel.insertProjectDemandFile({
+        id,
+        fileName,
+        filePath
+      });
+    }
+    if (status == 3) {
+      await projectModel.insertProjectDevDoc({
+        id,
+        fileName,
+        filePath
+      });
+    }
     result = CommonUtils.formatDateInObject(result);
     return result;
   }
@@ -157,6 +170,11 @@ class projectService {
       data: null,
       msg: "修改成功"
     };
+  }
+
+  static async getFile({ id }) {
+    let result = await projectModel.getFile({ id });
+    return result;
   }
 }
 

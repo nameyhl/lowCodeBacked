@@ -72,7 +72,7 @@ class projectModel {
   // 通过leaderId获取项目列表
   static async getProjectListByLeaderId(leaderId) {
     const [result] = await pool.query(
-      `SELECT * FROM project WHERE leaderId = ?`,
+      `SELECT * FROM projectInfo WHERE leaderId = ?`,
       [leaderId]
     );
     return result;
@@ -142,7 +142,7 @@ class projectModel {
   // 更具departmentLeader查询项目
   static async getProjectListByDepartment(id) {
     const [result] = await pool.query(
-      `SELECT * FROM projectInfo WHERE departmentLeader = ?`,
+      `SELECT * FROM projectinfo WHERE departmentLeader = ?`,
       [id]
     );
     return result;
@@ -176,6 +176,33 @@ class projectModel {
     const [result] = await pool.query(
       `UPDATE project SET backCodeAddress = ? WHERE id = ?`,
       [backCodeAddress, id]
+    );
+    return result;
+  }
+
+  // 插入项目需求文件
+  static async insertProjectDemandFile({ id, fileName, filePath }) {
+    const [result] = await pool.query(
+      `UPDATE project SET demandFileName = ?, demandFilePath = ? WHERE id = ?`,
+      [fileName, filePath, id]
+    );
+    return result.affectedRows;
+  }
+
+  // 插入项目开发文档
+  static async insertProjectDevDoc({ id, fileName, filePath }) {
+    const [result] = await pool.query(
+      `UPDATE project SET devFileName = ?, devFilePath = ? WHERE id = ?`,
+      [fileName, filePath, id]
+    );
+    return result.affectedRows;
+  }
+
+  // 查询文件
+  static async getFile({ id }) {
+    const [result] = await pool.query(
+      `SELECT * FROM projectfile WHERE id = ?`,
+      [id]
     );
     return result;
   }
