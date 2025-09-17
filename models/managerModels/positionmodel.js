@@ -19,7 +19,7 @@ class positionModel {
     WHERE 1 = 1 
     `;
     let totalSql = `
-    SELECT COUNT(*) AS total FROM job
+    SELECT COUNT(*) AS total FROM job AS j
     WHERE 1 = 1 
     `;
     if (departmentId) {
@@ -33,7 +33,7 @@ class positionModel {
     sql += ` limit ? offset ?`;
     const [result] = await pool.query(sql, [size, page]);
     const total = await pool.query(totalSql);
-    return { data: result, total: total[0].total };
+    return { data: result, total: total[0][0].total };
   }
 
   static getALlPosition = async ({ departmentId }) => {
