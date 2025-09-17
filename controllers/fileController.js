@@ -3,10 +3,14 @@ import fs from "fs";
 import { asyncHandler } from "../utils/responseHandler.js";
 import { promisify } from "util";
 
+
+const uploadPath = "D:\\codes\\myProject\\lowCode\\uploads"
+// const uploadPath = "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads"
+
 // 文件上传配置
 // 上传目录
 // 目录不存在则创建目录
-const UPLOAD_DIR = path.join("C:\\Users\\yyy\\Desktop\\11\\lowCode", "uploads");
+const UPLOAD_DIR = uploadPath;
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR);
 }

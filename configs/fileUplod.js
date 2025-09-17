@@ -1,8 +1,11 @@
 import multer from "multer";
 import path from "path";
 
+const uploadPath = "D:\\codes\\myProject\\lowCode\\uploads"
+// const uploadPath = "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads"
+
 const storage = multer.diskStorage({
-  destination: "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads",
+  destination: uploadPath,
 
   filename: (req, file, cb) => {
     console.log(file);
