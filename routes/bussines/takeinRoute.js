@@ -4,5 +4,6 @@ const router = express.Router();
 
 // 新增打卡
 router.post("/addTakein", takeinController.addTakein);
+router.get("/getTakein", takeinController.getTakeinList);
 
 export default router;

@@ -3,9 +3,8 @@ import fs from "fs";
 import { asyncHandler } from "../utils/responseHandler.js";
 import { promisify } from "util";
 
-
-const uploadPath = "D:\\codes\\myProject\\lowCode\\uploads"
-// const uploadPath = "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads"
+// const uploadPath = "D:\\codes\\myProject\\lowCode\\uploads"
+const uploadPath = "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads";
 
 // 文件上传配置
 // 上传目录
