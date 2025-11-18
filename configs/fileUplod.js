@@ -2,7 +2,7 @@ import multer from "multer";
 import path from "path";
 
 // const uploadPath = "D:\\codes\\myProject\\lowCode\\uploads"
-const uploadPath = "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads";
+const uploadPath = "E:\\nginx\\file\\photo";
 
 const storage = multer.diskStorage({
   destination: uploadPath,

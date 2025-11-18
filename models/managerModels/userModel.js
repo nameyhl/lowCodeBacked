@@ -14,10 +14,11 @@ class userModel {
       frimId,
       positionId,
       phone,
-      isEmp
+      isEmp,
+      avatar
     } = obj;
     try {
-      let sql = `INSERT INTO user (id, username, name, nikename, birth, email, wechat, departmentId, frimId,positionId, phone, isEmp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      let sql = `INSERT INTO user (id, username, name, nikename, birth, email, wechat, departmentId, frimId,positionId, phone, isEmp, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
       let [result] = await pool.query(sql, [
         id,
         username,
@@ -30,7 +31,8 @@ class userModel {
         frimId,
         positionId,
         phone,
-        isEmp
+        isEmp,
+        avatar
       ]);
       return result;
     } catch (error) {
@@ -106,10 +108,11 @@ class userModel {
       departmentId,
       frimId,
       positionId,
-      phone
+      phone,
+      avatar
     } = data;
     try {
-      let sql = `UPDATE user SET username = ?, name = ?, nikename = ?, birth = ?, email = ?, wechat = ?, departmentId = ?, frimId = ?, positionId = ?, phone = ? WHERE id = ?`;
+      let sql = `UPDATE user SET username = ?, name = ?, nikename = ?, birth = ?, email = ?, wechat = ?, departmentId = ?, frimId = ?, positionId = ?, phone = ?, avatar = ? WHERE id = ?`;
       let [result] = await pool.query(sql, [
         username,
         name,
@@ -121,6 +124,7 @@ class userModel {
         frimId,
         positionId,
         phone,
+        avatar,
         id
       ]);
       return result;

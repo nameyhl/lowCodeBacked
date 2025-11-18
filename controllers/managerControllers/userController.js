@@ -16,7 +16,8 @@ class userController {
       positionId,
       phone,
       frimId,
-      isEmp
+      isEmp,
+      avatar
     } = req.body;
     const result = await userService.addUser({
       username,
@@ -30,7 +31,8 @@ class userController {
       password,
       positionId,
       frimId,
-      isEmp
+      isEmp,
+      avatar
     });
     return result;
   });
@@ -71,7 +73,8 @@ class userController {
       departmentId,
       phone,
       positionId,
-      frimId
+      frimId,
+      avatar
     } = req.body;
     const result = await userService.updateUser({
       id,
@@ -84,7 +87,8 @@ class userController {
       departmentId,
       phone,
       positionId,
-      frimId
+      frimId,
+      avatar
     });
     return {
       msg: "修改用户成功",

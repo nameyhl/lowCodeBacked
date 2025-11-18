@@ -16,7 +16,8 @@ class userService {
     positionId,
     password,
     frimId,
-    isEmp
+    isEmp,
+    avatar
   }) {
     // 使用uuid生成唯一id
     let id = uuidv4();
@@ -42,7 +43,8 @@ class userService {
       password,
       positionId,
       frimId,
-      isEmp
+      isEmp,
+      avatar
     });
     return result;
   }
@@ -94,7 +96,8 @@ class userService {
     departmentId,
     phone,
     positionId,
-    frimId
+    frimId,
+    avatar
   }) {
     birth = new Date(birth);
     // 查询frimId
@@ -109,7 +112,8 @@ class userService {
       departmentId,
       phone,
       positionId,
-      frimId
+      frimId,
+      avatar
     });
     return user;
   }

@@ -4,7 +4,7 @@ import { asyncHandler } from "../utils/responseHandler.js";
 import { promisify } from "util";
 
 // const uploadPath = "D:\\codes\\myProject\\lowCode\\uploads"
-const uploadPath = "C:\\Users\\yyy\\Desktop\\11\\lowCode\\uploads";
+const uploadPath = "E:\\nginx\\file\\photo";
 
 // 文件上传配置
 // 上传目录
@@ -29,7 +29,7 @@ class fileController {
         msg: "文件上传成功",
         data: {
           fileName: Buffer.from(file.originalname, "latin1").toString("utf8"),
-          fileUrl: file.filename
+          fileUrl: "/file/photo/" + file.filename
         }
       };
     } catch (err) {
