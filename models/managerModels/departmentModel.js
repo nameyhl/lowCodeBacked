@@ -42,8 +42,8 @@ class departmentModel {
         selectTotleSql += ` AND d.name LIKE '%${name}%'`;
       }
       if (frimId) {
-        selectDepartmentSqlWithLimit += ` AND fd.frimId = ${frimId}`;
-        selectTotleSql += ` AND fd.frimId = ${frimId}`;
+        selectDepartmentSqlWithLimit += ` AND f.id = ${frimId}`;
+        selectTotleSql += ` AND f.id = ${frimId}`;
       }
       selectDepartmentSqlWithLimit += ` LIMIT ? OFFSET ?`;
       const [departments] = await pool.query(selectDepartmentSqlWithLimit, [

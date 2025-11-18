@@ -15,6 +15,7 @@ class takeinService {
   }
   static async getTakeinList({ userId }) {
     let result = await takeinModel.getTakeinList({ userId });
+    result = CommonUtils.formatDateInObject(result);
     return result;
   }
 }
